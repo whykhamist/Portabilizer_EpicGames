@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <PackageId>Portabilizer_Plugin</PackageId>
+    <Description>A plugin template for Portabilizer</Description>
+    <Authors>Jhyden Jhoe Marx Ellana</Authors>
+    <Product>Portabilizer</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Configuration">
+      <HintPath>..\..\Portabilizer\Configuration\bin\Debug\net5.0\Configuration.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
