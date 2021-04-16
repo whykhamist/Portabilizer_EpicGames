@@ -27,6 +27,6 @@ namespace Portable
         /// Your icon here in bytes.
         /// Compile your icon as a resource and put it here.
         /// </summary>
-        public byte[] IconBytes => null;
+        public byte[] IconBytes => Properties.Resources.favico;
     }
 }
