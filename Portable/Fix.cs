@@ -1,5 +1,9 @@
 ﻿using Configuration;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +19,36 @@ namespace Portable
         /// <param name="args"></param>
         public void ExecuteApplication(string executable, string[] args)
         {
-            throw new NotImplementedException();
+            string text = "";
+            string text2 = null;
+            foreach (string text3 in args.Skip(1))
+            {
+                File.WriteAllText("test.txt", text3);
+                string a = text3.Split('=')[0].ToLower();
+                string text4 = text3.Split('=')[1].ToLower();
+                if (a == "_runapp" && !string.IsNullOrWhiteSpace(text4))
+                {
+                    text2 = text4;
+                }
+                else
+                {
+                    text = text + text3 + " ";
+                }
+            }
+            Process process = new Process();
+            process.StartInfo.WorkingDirectory = Path.GetDirectoryName(executable);
+            if (!string.IsNullOrWhiteSpace(text2))
+            {
+                process.StartInfo.FileName = executable;
+                process.StartInfo.Arguments = "com.epicgames.launcher://apps/" + text2 + "?action=launch&silent=true";
+            }
+            else
+            {
+                process.StartInfo.Arguments = text;
+                process.StartInfo.FileName = executable;
+            }
+            process.Start();
+            process.WaitForExit();
         }
 
         /// <summary>
@@ -24,9 +57,15 @@ namespace Portable
         /// <param name="progress"></param>
         /// <param name="cancelToken"></param>
         /// <returns></returns>
-        public Task Pre(IProgress<FixProgress> progress = null, CancellationToken cancelToken = default)
+        public async Task Pre(IProgress<FixProgress> progress = null, CancellationToken cancelToken = default)
         {
-            throw new NotImplementedException();
+            var progression = new FixProgress
+            {
+                Progress = 100d
+            };
+            await Task.Delay(10, cancelToken);
+
+            progress?.Report(progression);
         }
 
         /// <summary>
@@ -35,9 +74,43 @@ namespace Portable
         /// <param name="progress"></param>
         /// <param name="cancelToken"></param>
         /// <returns></returns>
-        public Task Post(IProgress<FixProgress> progress = null, CancellationToken cancelToken = default)
+        public async Task Post(IProgress<FixProgress> progress = null, CancellationToken cancelToken = default)
         {
-            throw new NotImplementedException();
+            progress?.Report(new FixProgress
+            {
+                Progress = 15d,
+                StatusMessage = $"Collecting manifests information."
+            });
+            List<Manifest> manifests = Fixers.CollectManifests(Fixers.ManifestLocation);
+
+            progress?.Report(new FixProgress
+            {
+                Progress = 20d,
+                StatusMessage = $"Found {manifests.Count} file(s)."
+            });
+
+            double ctr = (manifests.Count * 100);
+            double ctrFixed = 0d;
+
+            foreach (Manifest manifest in manifests)
+            {
+                var fixedManifest = Fixers.FixManifests(manifest, Fixers.GamesFolder);
+                fixedManifest.SaveManifest(Fixers.ManifestLocation);
+                ctrFixed++;
+                progress?.Report(new FixProgress
+                {
+                    Progress = (((100 * ctrFixed) / ctr) * 50) + 20d,
+                    StatusMessage = manifest.AppName
+                });
+                await Task.Delay(10, cancelToken);
+            }
+
+            progress?.Report(new FixProgress
+            {
+                Progress = 100d,
+                StatusMessage = "Done!"
+            });
+            await Task.Delay(10, cancelToken);
         }
     }
 }
