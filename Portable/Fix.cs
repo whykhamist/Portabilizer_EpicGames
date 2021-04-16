@@ -105,6 +105,23 @@ namespace Portable
                 await Task.Delay(10, cancelToken);
             }
 
+            List<string> catalogs = Fixers.CollectCatalogsWithNoManifest();
+            double ctrCats = (catalogs.Count * 100);
+            double ctrBuilt = 0d;
+
+            foreach(string catalog in catalogs)
+            {
+                MiniManifest mm = Fixers.CreateMinimalManifest(catalog);
+                mm.SaveManifest(Fixers.ManifestLocation);
+                ctrBuilt++;
+                progress?.Report(new FixProgress
+                {
+                    Progress = (((100 * ctrBuilt) / ctrCats) * 20) + 70d,
+                    StatusMessage = $"Built minimal manifest for {mm.MainGameAppName}."
+                });
+                await Task.Delay(10, cancelToken);
+            }
+
             progress?.Report(new FixProgress
             {
                 Progress = 100d,

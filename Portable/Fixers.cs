@@ -17,6 +17,7 @@ namespace Portable
                     "Epic", "EpicGamesLauncher", "Data", "Manifests");
             }
         }
+
         public static string GamesFolder
         {
             get
@@ -48,6 +49,43 @@ namespace Portable
                 manifests.Add(ReadManifestFile(fi.FullName));
             }
             return manifests;
+        }
+
+        public static List<string> CollectCatalogsWithNoManifest()
+        {
+            List<string> output = new List<string>();
+
+            DirectoryInfo[] gamesFolderInfo = new DirectoryInfo(GamesFolder).GetDirectories();
+            foreach (DirectoryInfo di in gamesFolderInfo)
+            {
+                string tmp = Path.Combine(di.FullName, ".egstore");
+                if (Directory.Exists(tmp))
+                {
+                    FileInfo[] catalogFiles = di.GetFiles(Path.Combine(".egstore", "*.mancpn"));
+                    if (catalogFiles.Length > 0)
+                    {
+                        foreach (FileInfo catFile in catalogFiles)
+                        {
+                            if (!CatalogHasManifest(catFile.Name.Replace(".mancpn", "")))
+                            {
+                                output.Add(catFile.FullName);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Check if Catalog name (without extension) has a corresponding Manifest file
+        /// </summary>
+        /// <param name="catalogFileName"></param>
+        /// <returns></returns>
+        public static bool CatalogHasManifest(string catalogFileName)
+        {
+            return File.Exists(Path.Combine(ManifestLocation, $"{catalogFileName}.item"));
         }
 
         public static MiniManifest CreateMinimalManifest(string catalogFilePath)

@@ -5,15 +5,16 @@ using System.IO;
 
 namespace Portable
 {
-    internal class Configuration : IConfiguration
+    public class Configuration : Config, IConfiguration
     {
-        public string Title { get; set; } = "Epic Games Portable";
-        public int Width { get; set; } = 512;
-        public int Height { get; set; } = 115;
-        public bool ClearSymlinks { get; set; } = true;
-        public string Executable { get ; set; } = @$"Launcher\Portal\Binaries\Win{ (Environment.Is64BitOperatingSystem ? "64" : "32") }\EpicGamesLauncher.exe";
-        public string DataFolder { get ; set; }
-        public List<DataPaths> DataPaths { get ; set; } = new List<DataPaths>() {
+        public Configuration() { }
+        public new string Title { get; set; } = "Epic Games Portable";
+        public new int Width { get; set; } = 512;
+        public new int Height { get; set; } = 115;
+        public new bool ClearSymlinks { get; set; } = false;
+        public new string Executable { get ; set; } = @$"Launcher\Portal\Binaries\Win{ (Environment.Is64BitOperatingSystem ? "64" : "32") }\EpicGamesLauncher.exe";
+        public new string DataFolder { get ; set; }
+        public new List<DataPaths> DataPaths { get ; set; } = new List<DataPaths>() {
             new DataPaths
             {
                 GroupName = "EpicGames",
