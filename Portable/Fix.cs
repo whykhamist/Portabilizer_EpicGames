@@ -23,7 +23,6 @@ namespace Portable
             string text2 = null;
             foreach (string text3 in args.Skip(1))
             {
-                File.WriteAllText("test.txt", text3);
                 string a = text3.Split('=')[0].ToLower();
                 string text4 = text3.Split('=')[1].ToLower();
                 if (a == "_runapp" && !string.IsNullOrWhiteSpace(text4))
