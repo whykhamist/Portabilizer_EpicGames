@@ -19,6 +19,7 @@
     </Reference>
     <Reference Include="Systems">
       <HintPath>..\..\Portabilizer\Systems\bin\Release\net5.0\Systems.dll</HintPath>
+      <Private>false</Private>
     </Reference>
   </ItemGroup>
 
