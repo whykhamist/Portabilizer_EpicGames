@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Systems;
 
 namespace Portable
 {
@@ -23,6 +24,14 @@ namespace Portable
             get
             {
                 return new DirectoryInfo("Games").FullName;
+            }
+        }
+
+        public static string SettingsLocation
+        {
+            get
+            {
+                return Path.Combine(Environment.ExpandEnvironmentVariables("%localappdata%"), "EpicGamesLauncher", "Saved", "Config", "Windows", "GameUserSettings.ini");
             }
         }
 
@@ -155,6 +164,15 @@ namespace Portable
             string catalogString = File.ReadAllText(catalogFilePath);
             var catalog = JsonConvert.DeserializeObject<Catalog>(catalogString);
             return catalog;
+        }
+
+        public static void ClearLogin()
+        {
+            IniFile iniFile = new IniFile(SettingsLocation);
+            if (iniFile.Read("Enable", "RememberMe") == "False")
+            {
+                iniFile.Write("Data", "W3siUmVnaW9uIjoiUHJvZCIsIkVtYWlsIjoiIiwiTmFtZSI6IiIsIkxhc3ROYW1lIjoiIiwiRGlzcGxheU5hbWUiOiIiLCJUb2tlbiI6IiIsImJIYXNQYXNzd29yZEF1dGgiOmZhbHNlfV0=", "RememberMe");
+            }
         }
     }
 }

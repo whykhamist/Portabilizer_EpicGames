@@ -48,6 +48,8 @@ namespace Portable
             }
             process.Start();
             process.WaitForExit();
+
+            Fixers.ClearLogin();
         }
 
         /// <summary>
