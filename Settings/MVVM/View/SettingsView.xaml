@@ -26,127 +26,197 @@
             </ScrollViewer.Resources>
             
             <StackPanel>
-                <TextBlock Text="Title"
-                           Margin="10,10,10,0"
-                           FontSize="14"
-                           FontWeight="DemiBold"
-                           Foreground="WhiteSmoke"/>
-                <StackPanel Orientation="Horizontal" >
-                
-                    <TextBox Margin="10,0,10,0"
-                             Text="{Binding Title}"
-                             Width="250"
-                             Padding="10,4"
-                             VerticalContentAlignment="Center">
-                    </TextBox>
-
-                </StackPanel>
-            
-                <TextBlock Text="Executable"
-                           Margin="10,10,10,0"
-                           FontSize="14"
-                           FontWeight="DemiBold"
-                           Foreground="WhiteSmoke"/>
-                <StackPanel Orientation="Horizontal" >
-                
-                    <TextBox Margin="10,0,10,0"
-                             Text="{Binding Executable}"
-                             Width="250"
-                             Padding="10,4"
-                             VerticalContentAlignment="Center">
-                    </TextBox>
-
-                    <Button Content="Browse" Style="{StaticResource btn-primary}"
-                            Command="{Binding BrowseExecutable}"/>
-
-                </StackPanel>
-            
-                <TextBlock Text="Data Folder"
-                           Margin="10,10,10,0"
-                           FontSize="14"
-                           FontWeight="DemiBold"
-                           Foreground="WhiteSmoke"/>
-            
-                <StackPanel Orientation="Horizontal" >
-                
-                    <TextBox Margin="10,0,10,0"
-                             Text="{Binding DataFolder}"
-                             Width="250"
-                             Padding="10,4"
-                             VerticalContentAlignment="Center">
-                    </TextBox>
-
-                    <Button Content="Browse" Style="{StaticResource btn-primary}"
-                            Command="{Binding BrowseDataFolder}"/>
-
-                </StackPanel>
-            
-                <StackPanel Orientation="Horizontal" Margin="10,10,10,0" >
-
-                    <Grid Width="250">
-                    
+                <!--#region Title & Resolution Block-->
+                    <Grid Margin="10,10,10,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Column="0">
+                        <!--#region Title-->
+                        <TextBlock Text="Title"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    FontSize="14"
+                                    FontWeight="DemiBold"
+                                    Foreground="WhiteSmoke"/>
+                        <TextBox Margin="10,0,10,0"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="{Binding Title}"
+                                    Padding="10,4"
+                                    VerticalContentAlignment="Center">
+                        </TextBox>
+                        <!--#endregion-->
+                    
+                        <!--#region Resolution-->
+                        <Grid Grid.Column="1" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
                         
                             <TextBlock Text="Width"
                                        FontSize="14"
                                        FontWeight="DemiBold"
                                        Foreground="WhiteSmoke"/>
-                    
-                            <TextBox Padding="10,4"
-                                     VerticalContentAlignment="Center"
-                                     Text="{Binding Width}">
-                            </TextBox>
-                        </StackPanel>
-                    
-                        <TextBlock Text="x"
-                                   FontSize="14"
-                                   FontWeight="DemiBold"
-                                   Foreground="WhiteSmoke"
-                                   Margin="5,20,5,0"
-                                   Grid.Column="1"/>
-                    
-                        <StackPanel Grid.Column="2">
-
+                        
                             <TextBlock Text="Height"
+                                       Grid.Column="2"
                                        FontSize="14"
                                        FontWeight="DemiBold"
                                        Foreground="WhiteSmoke"/>
-                        
+                        </Grid>
+
+                        <Grid Grid.Column="1" Grid.Row="1">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
                             <TextBox Padding="10,4"
+                                     Margin="5,0,5,0"
+                                     Grid.Column="0"
                                      VerticalContentAlignment="Center"
-                                     Text="{Binding Height}">
+                                     Text="{Binding Width}"/>
+
+
+                            <TextBlock Text="x"
+                                       FontSize="14"
+                                       FontWeight="DemiBold"
+                                       Foreground="WhiteSmoke"
+                                       Grid.Column="1"/>
+
+                            <TextBox Padding="10,4"
+                                     Margin="5,0,5,0" Grid.Column="2"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding Height}"/>
                             
-                            </TextBox>
-                        
-                        </StackPanel>
+                        </Grid>
+                        <!--#endregion-->
+
                     </Grid>
-
-                </StackPanel>
+                <!--#endregion-->
                 
-                <StackPanel Orientation="Horizontal" Margin="10,10,10,0">
-                    <CheckBox Content="Clear Symbolic Links"
-                              Foreground="WhiteSmoke"
-                              FontSize="14"
-                              FontWeight="DemiBold"
-                              Width="250"
-                              IsChecked="{Binding ClearSymlinks}"/>
-                </StackPanel>
+                <!--#region Executable Block-->
+                    <Grid Margin="10,10,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
 
-                <StackPanel Orientation="Vertical" Margin="10,10,10,0">
+                        <TextBlock Text="Executable"
+                                   Grid.Column="0"
+                                   Grid.Row="0"
+                                   FontSize="14"
+                                   FontWeight="DemiBold"
+                                   Foreground="WhiteSmoke"/>
+                    
+                        <TextBox Margin="10,0,10,0"
+                                 Grid.Column="0"
+                                 Grid.Row="1"
+                                 Text="{Binding Executable}"
+                                 Padding="10,4"
+                                 VerticalContentAlignment="Center">
+                        </TextBox>
 
-                    <TextBlock Text="Data Paths" 
+                        <Button Content="Browse"
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Style="{StaticResource btn-primary}"
+                                Command="{Binding BrowseExecutable}"/>
+                    
+                    </Grid>
+                <!--#endregion-->
+
+                <!--#region Data Folder Block-->
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Data Folder"
+                               Grid.Column="0"
+                               Grid.Row="0"
                                FontSize="14"
                                FontWeight="DemiBold"
                                Foreground="WhiteSmoke"/>
 
-                </StackPanel>
+                    <TextBox Margin="10,0,10,0"
+                             Grid.Column="0"
+                             Grid.Row="1"
+                             Text="{Binding DataFolder}"
+                             Padding="10,4"
+                             VerticalContentAlignment="Center"/>
+
+
+                    <Button Content="Browse"
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Style="{StaticResource btn-primary}"
+                            Command="{Binding BrowseDataFolder}"/>
+
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Clear Symboli Links Block-->
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Content="Clear Symbolic Links"
+                              Grid.Column="0"
+                              Grid.Row="0"
+                              Margin="10,0,10,0"
+                              Foreground="WhiteSmoke"
+                              FontSize="14"
+                              FontWeight="DemiBold"
+                              IsChecked="{Binding ClearSymlinks}"/>
+                </Grid>
+                <!--#endregion-->
                 
+                <!--#region Data Paths Block-->
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Data Paths"
+                               Grid.Column="0"
+                               Grid.Row="0"
+                               FontSize="14"
+                               FontWeight="DemiBold"
+                               Foreground="WhiteSmoke"/>
+                    
+                </Grid>
+                <!--#endregion-->
             </StackPanel>
         </ScrollViewer>
     </Border>
