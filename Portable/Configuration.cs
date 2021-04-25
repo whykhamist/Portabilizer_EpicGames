@@ -14,7 +14,7 @@ namespace Portable
         public new int Height { get; set; } = 115;
         public new bool ClearSymlinks { get; set; } = false;
         public new string Executable { get ; set; } = @$"Launcher\Portal\Binaries\Win{ (Environment.Is64BitOperatingSystem ? "64" : "32") }\EpicGamesLauncher.exe";
-        public new string DataFolder { get ; set; }
+        public new string DataFolder { get; set; } = "Portable";
         public new List<DataPaths> DataPaths { get ; set; } = new List<DataPaths>() {
             new DataPaths
             {
