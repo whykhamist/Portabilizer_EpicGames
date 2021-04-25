@@ -5,6 +5,7 @@ using System.IO;
 
 namespace Portable
 {
+    [Serializable]
     public class Configuration : Config, IConfiguration
     {
         public Configuration() { }
