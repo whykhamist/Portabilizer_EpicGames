@@ -16,19 +16,19 @@ namespace Settings.MVVM.ViewModel
 {
     public class SettingsViewModel : ObservableObject
     {
-        private Config _configuration
-        { get;set; }
+        private Config UserConfig { get;set; }
+        private static Config PortableConfig { get { return new Portable.Configuration(); } }
 
         public RelayCommand BrowseExecutable { get; set; }
         public RelayCommand BrowseDataFolder { get; set; }
 
         public string Title { get
             {
-                return _configuration.Title;
+                return UserConfig.Title;
             }
             set
             {
-                _configuration.Title = value;
+                UserConfig.Title = value;
                 SaveConfig();
                 OnPropertyChanged("Title");
             }
@@ -38,11 +38,11 @@ namespace Settings.MVVM.ViewModel
         {
             get
             {
-                return _configuration.Executable;
+                return UserConfig.Executable;
             }
             set
             {
-                _configuration.Executable = value;
+                UserConfig.Executable = value;
                 SaveConfig();
                 OnPropertyChanged("Executable");
             }
@@ -52,11 +52,11 @@ namespace Settings.MVVM.ViewModel
         {
             get
             {
-                return _configuration.DataFolder;
+                return UserConfig.DataFolder;
             }
             set
             {
-                _configuration.DataFolder = value;
+                UserConfig.DataFolder = value;
                 SaveConfig();
                 OnPropertyChanged("DataFolder");
             }
@@ -66,11 +66,11 @@ namespace Settings.MVVM.ViewModel
         {
             get
             {
-                return _configuration.Width < 0 ? 510 : _configuration.Width;
+                return UserConfig.Width < 0 ? 510 : UserConfig.Width;
             }
             set
             {
-                _configuration.Width = (value < 0) ? 510 : value;
+                UserConfig.Width = (value < 0) ? 510 : value;
                 SaveConfig();
                 OnPropertyChanged("Width");
             }
@@ -80,11 +80,11 @@ namespace Settings.MVVM.ViewModel
         {
             get
             {
-                return _configuration.Height < 0 ? 110 : _configuration.Height;
+                return UserConfig.Height < 0 ? 110 : UserConfig.Height;
             }
             set
             {
-                _configuration.Height = (value < 0) ? 110 : value;
+                UserConfig.Height = (value < 0) ? 110 : value;
                 SaveConfig();
                 OnPropertyChanged("Height");
             }
@@ -94,11 +94,11 @@ namespace Settings.MVVM.ViewModel
         {
             get
             {
-                return _configuration.ClearSymlinks;
+                return UserConfig.ClearSymlinks;
             }
             set
             {
-                _configuration.ClearSymlinks = value;
+                UserConfig.ClearSymlinks = value;
                 SaveConfig();
                 OnPropertyChanged("ClearSymlinks");
             }
@@ -108,24 +108,36 @@ namespace Settings.MVVM.ViewModel
         {
             get
             {
-                return _configuration.DataPaths;
+                return UserConfig.DataPaths;
             }
             set
             {
-                _configuration.DataPaths = value;
+                UserConfig.DataPaths = value;
                 SaveConfig();
                 OnPropertyChanged("DataPaths");
             }
         }
 
+        public List<DataPaths> PluginDataPaths
+        {
+            get
+            {
+                return PortableConfig.DataPaths;
+            }
+        }
+
         public SettingsViewModel()
         {
-            _configuration = new Portable.Configuration();
+            UserConfig = new Config();
 
             if (File.Exists(Constants.ConfigFileName))
             {
-                _configuration = _configuration.Merge(ConfigReader.Read(Constants.ConfigFileName));
+                UserConfig = ConfigReader.Read(Constants.ConfigFileName);
+                var tmp = UserConfig.DataPaths;
+                UserConfig = PortableConfig.Merge(UserConfig);
+                UserConfig.DataPaths = tmp;
             }
+
             SaveConfig();
 
             BrowseExecutable = new RelayCommand(o => { BrowseExecutableFunc(); });
@@ -142,7 +154,7 @@ namespace Settings.MVVM.ViewModel
             {
                 using (JsonWriter jsonWriter = new JsonTextWriter(textWriter))
                 {
-                    jsonSerializer.Serialize(jsonWriter, _configuration);
+                    jsonSerializer.Serialize(jsonWriter, UserConfig);
                 }
             }
         }
@@ -161,10 +173,12 @@ namespace Settings.MVVM.ViewModel
 
         private void BrowseDataFolderFunc()
         {
-            WinForms.FolderBrowserDialog FBD = new WinForms.FolderBrowserDialog();
+            var FBD = new WinForms.FolderBrowserDialog
+            {
+                ShowNewFolderButton = true,
+                SelectedPath = Environment.CurrentDirectory
+            };
 
-            FBD.ShowNewFolderButton = true;
-            FBD.SelectedPath = Environment.CurrentDirectory;
             if (FBD.ShowDialog() == WinForms.DialogResult.OK)
             {
                 DataFolder = FBD.SelectedPath.Replace(@$"{Environment.CurrentDirectory}\", "");
