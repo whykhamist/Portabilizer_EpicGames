@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="BorderShadow" TargetType="{x:Type Border}">
+        
+        <Setter Property="Effect">
+            <Setter.Value>
+                <BlurEffect KernelType="Gaussian" Radius="15" RenderingBias="Quality" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness" Value="5"/>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
+                <Setter Property="Effect" Value="{x:Null}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Epic Games Portable.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Epic Games Portable.png" />
+    <None Remove="times.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Portable\Portable.csproj">
+      <Private></Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Configuration">
+      <HintPath>..\..\Portabilizer\Configuration\bin\Debug\net5.0\Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Systems">
+      <HintPath>..\..\Portabilizer\Systems\bin\Release\net5.0\Systems.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Epic Games Portable.png" />
+    <Resource Include="Images\times.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+</Project>

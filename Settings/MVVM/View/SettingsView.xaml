@@ -1,0 +1,153 @@
+﻿<UserControl x:Class="Settings.MVVM.View.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Settings.MVVM.View"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:viewmodel="clr-namespace:Settings.MVVM.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="276" d:DesignWidth="435">
+    <UserControl.DataContext>
+        <viewmodel:SettingsViewModel/>
+    </UserControl.DataContext>
+    
+    <Border BorderThickness="1" BorderBrush="WhiteSmoke" CornerRadius="10"
+            Background="#3C3C3C">
+        <Border.Clip>
+            <RectangleGeometry RadiusX="10"
+                               RadiusY="10"
+                               Rect="0,0,435,276"/>
+        </Border.Clip>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer.Resources>
+                <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">12</sys:Double>
+            </ScrollViewer.Resources>
+            
+            <StackPanel>
+                <TextBlock Text="Title"
+                           Margin="10,10,10,0"
+                           FontSize="14"
+                           FontWeight="DemiBold"
+                           Foreground="WhiteSmoke"/>
+                <StackPanel Orientation="Horizontal" >
+                
+                    <TextBox Margin="10,0,10,0"
+                             Text="{Binding Title}"
+                             Width="250"
+                             Padding="10,4"
+                             VerticalContentAlignment="Center">
+                    </TextBox>
+
+                </StackPanel>
+            
+                <TextBlock Text="Executable"
+                           Margin="10,10,10,0"
+                           FontSize="14"
+                           FontWeight="DemiBold"
+                           Foreground="WhiteSmoke"/>
+                <StackPanel Orientation="Horizontal" >
+                
+                    <TextBox Margin="10,0,10,0"
+                             Text="{Binding Executable}"
+                             Width="250"
+                             Padding="10,4"
+                             VerticalContentAlignment="Center">
+                    </TextBox>
+
+                    <Button Content="Browse" Style="{StaticResource btn-primary}"
+                            Command="{Binding BrowseExecutable}"/>
+
+                </StackPanel>
+            
+                <TextBlock Text="Data Folder"
+                           Margin="10,10,10,0"
+                           FontSize="14"
+                           FontWeight="DemiBold"
+                           Foreground="WhiteSmoke"/>
+            
+                <StackPanel Orientation="Horizontal" >
+                
+                    <TextBox Margin="10,0,10,0"
+                             Text="{Binding DataFolder}"
+                             Width="250"
+                             Padding="10,4"
+                             VerticalContentAlignment="Center">
+                    </TextBox>
+
+                    <Button Content="Browse" Style="{StaticResource btn-primary}"
+                            Command="{Binding BrowseDataFolder}"/>
+
+                </StackPanel>
+            
+                <StackPanel Orientation="Horizontal" Margin="10,10,10,0" >
+
+                    <Grid Width="250">
+                    
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                        
+                            <TextBlock Text="Width"
+                                       FontSize="14"
+                                       FontWeight="DemiBold"
+                                       Foreground="WhiteSmoke"/>
+                    
+                            <TextBox Padding="10,4"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding Width}">
+                            </TextBox>
+                        </StackPanel>
+                    
+                        <TextBlock Text="x"
+                                   FontSize="14"
+                                   FontWeight="DemiBold"
+                                   Foreground="WhiteSmoke"
+                                   Margin="5,20,5,0"
+                                   Grid.Column="1"/>
+                    
+                        <StackPanel Grid.Column="2">
+
+                            <TextBlock Text="Height"
+                                       FontSize="14"
+                                       FontWeight="DemiBold"
+                                       Foreground="WhiteSmoke"/>
+                        
+                            <TextBox Padding="10,4"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding Height}">
+                            
+                            </TextBox>
+                        
+                        </StackPanel>
+                    </Grid>
+
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Margin="10,10,10,0">
+                    <CheckBox Content="Clear Symbolic Links"
+                              Foreground="WhiteSmoke"
+                              FontSize="14"
+                              FontWeight="DemiBold"
+                              Width="250"
+                              IsChecked="{Binding ClearSymlinks}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10,10,10,0">
+
+                    <TextBlock Text="Data Paths" 
+                               FontSize="14"
+                               FontWeight="DemiBold"
+                               Foreground="WhiteSmoke"/>
+
+                </StackPanel>
+                
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</UserControl>
