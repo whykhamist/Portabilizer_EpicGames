@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Settings.MVVM.Model;
+using System;
 using System.Windows.Input;
 
 namespace Settings.Core
@@ -17,8 +18,11 @@ namespace Settings.Core
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
             _execute = execute;
-            _canExecute = canExecute;
+            _canExecute = canExecute ?? (x=>true);
         }
+
+        public RelayCommand(Action<object> action) : this(action, null) { }
+
 
         public bool CanExecute(object parameter)
         {

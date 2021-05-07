@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Epic Games Portable.png" />
+    <None Remove="Fonts\GENUINE.ttf" />
     <None Remove="times.png" />
   </ItemGroup>
 
@@ -29,12 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\GENUINE.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Epic Games Portable.png" />
     <Resource Include="Images\times.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Fonts\" />
   </ItemGroup>
 
   <ItemGroup>

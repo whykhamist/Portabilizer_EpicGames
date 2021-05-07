@@ -1,0 +1,184 @@
+﻿<UserControl x:Class="Settings.MVVM.View.PathsEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Settings.MVVM.View"
+             xmlns:viewmodel="clr-namespace:Settings.MVVM.ViewModel"
+             mc:Ignorable="d" FontSize="12" Foreground="{StaticResource scb-light-dark}"
+             x:Name="PathsEditorWindow" d:DesignWidth="714"
+             d:DesignHeight="300">
+
+    <Border Margin="5"
+            BorderThickness="0 0 0 3"
+            BorderBrush="{StaticResource scb-dark-light}"
+            Padding="5">
+        <Border.Style>
+            <Style TargetType="{x:Type Border}">
+                <Style.Setters>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{StaticResource clr-dark-light}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+        </Border.Style>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="GroupName"
+                         Padding="3 5 3 5"
+                         Margin="5"
+                         MaxWidth="250"
+                         FontSize="18"
+                         Text="{Binding DataPaths.GroupName}"
+                         Style="{StaticResource txtBox}"/>
+
+            </Grid>
+
+
+            <Border Grid.Row="1"
+                    BorderBrush="{StaticResource scb-light-dark}"
+                    BorderThickness="1"
+                    Margin="5">
+
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                              VerticalScrollBarVisibility="Visible">
+                    
+                    <ItemsControl ItemsSource="{Binding DataPaths.Paths}">
+                        <ItemsControl.Style>
+                            <Style TargetType="ItemsControl">
+                                <Style.Triggers>
+                                    <Trigger Property="HasItems" Value="False">
+                                        <Setter Property="Template" Value="{StaticResource NoData}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="45"/>
+                                        <ColumnDefinition Width="45"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0"
+                                             Text="{Binding FolderName}"
+                                             Padding="3 5 3 5"
+                                             Margin="5"
+                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                             TextChanged="TextBox_TextChanged"
+                                             Loaded="TextBox_Loaded"
+                                             Style="{StaticResource txtBox}"/>
+
+                                    <TextBox Grid.Column="1"
+                                             Text="{Binding Path}"
+                                             Padding="3 5 3 5"
+                                             MaxWidth="300"
+                                             Margin="5"
+                                             Style="{StaticResource txtBox}"/>
+
+
+                                    <Button Style="{StaticResource btn-primary}"
+                                                    Grid.Column="2"
+                                                    Margin="5"
+                                                    Padding="0"
+                                                    Command="{Binding DataContext.BrowsePathCmd,
+                                                            RelativeSource={RelativeSource FindAncestor,
+                                                            AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding}">
+
+                                        <ContentControl Template="{StaticResource fa-folder-open}" 
+                                                                Width="16" Height="16"
+                                                                VerticalAlignment="Center"
+                                                                HorizontalAlignment="Center"
+                                                                Foreground="{StaticResource scb-text-light}"/>
+                                    </Button>
+
+                                    <Button Style="{StaticResource btn-danger}"
+                                            Grid.Column="3"
+                                            Margin="5"
+                                            Padding="0"
+                                            Click="Button_Click"
+                                            Command="{Binding DataContext.RemovePathCmd,
+                                                    RelativeSource={RelativeSource FindAncestor,
+                                                    AncestorType={x:Type ItemsControl}}}"
+                                            CommandParameter="{Binding}">
+
+                                        <ContentControl Template="{StaticResource fa-trash-alt}" 
+                                                                Width="16" Height="16"
+                                                                VerticalAlignment="Center"
+                                                                HorizontalAlignment="Center"
+                                                                Foreground="{StaticResource scb-text-light}"/>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
+                </ScrollViewer>
+            </Border>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        Padding="3 5 3 5"
+                        Margin="5 0 0 0"
+                        BorderBrush="{StaticResource scb-default-dark}"
+                        Background="Transparent">
+                    
+                    <TextBlock d:Text="This is a test message"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource scb-light-dark}"
+                               Text="{Binding StatusMessage}"/>
+                    
+                </Border>
+
+                <Button Grid.Column="1"
+                        x:Name="AddPathBtn"
+                        Margin="5 0"
+                        Command="{Binding AddPathCmd}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource btn-primary}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PathsHasEmpty}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding PathsHasEmpty}" Value="False">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <ContentControl Template="{StaticResource fa-plus}" 
+                                    Width="16" Height="16"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource scb-text-light}"/>
+                </Button>
+                
+            </Grid>
+            
+        </Grid>
+
+    </Border>
+</UserControl>

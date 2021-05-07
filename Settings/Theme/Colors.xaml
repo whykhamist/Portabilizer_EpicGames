@@ -1,0 +1,81 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <Color x:Key="clr-primary-light">#5FB3FF</Color>
+    <Color x:Key="clr-primary">#1266F1</Color>
+    <Color x:Key="clr-primary-dark">#004DD8</Color>
+
+    <Color x:Key="clr-secondary-light">#FF89FF</Color>
+    <Color x:Key="clr-secondary">#B23CFD</Color>
+    <Color x:Key="clr-secondary-dark">#9923E4</Color>
+
+    <Color x:Key="clr-success-light">#4DFF97</Color>
+    <Color x:Key="clr-success">#00B74A</Color>
+    <Color x:Key="clr-success-dark">#009E31</Color>
+
+    <Color x:Key="clr-danger-light">#FF6487</Color>
+    <Color x:Key="clr-danger">#F93154</Color>
+    <Color x:Key="clr-danger-dark">#E0183B</Color>
+
+    <Color x:Key="clr-warning-light">#FFDC33</Color>
+    <Color x:Key="clr-warning">#FFA900</Color>
+    <Color x:Key="clr-warning-dark">#E69000</Color>
+
+    <Color x:Key="clr-info-light">#6CF3FF</Color>
+    <Color x:Key="clr-info">#39C0ED</Color>
+    <Color x:Key="clr-info-dark">#20A7D4</Color>
+
+    <Color x:Key="clr-light">#FBFBFB</Color>
+    <Color x:Key="clr-light-dark">#E2E2E2</Color>
+
+    <Color x:Key="clr-dark-light">#595959</Color>
+    <Color x:Key="clr-dark">#262626</Color>
+    <Color x:Key="clr-dark-dark">#1A1A1A</Color>
+
+    <Color x:Key="clr-default">#E0E0E0</Color>
+    <Color x:Key="clr-default-dark">#C7C7C7</Color>
+
+    <Color x:Key="clr-text-dark">#4f4f4f</Color>
+    <Color x:Key="clr-text-light">#FFFFFF</Color>
+
+    <SolidColorBrush x:Key="scb-primary-light" Color="{StaticResource clr-primary-light}"/>
+    <SolidColorBrush x:Key="scb-primary" Color="{StaticResource clr-primary}"/>
+    <SolidColorBrush x:Key="scb-primary-dark" Color="{StaticResource clr-primary-dark}"/>
+
+    <SolidColorBrush x:Key="scb-secondary-light" Color="{StaticResource clr-secondary-light}"/>
+    <SolidColorBrush x:Key="scb-secondary" Color="{StaticResource clr-secondary}"/>
+    <SolidColorBrush x:Key="scb-secondary-dark" Color="{StaticResource clr-secondary-dark}"/>
+
+    <SolidColorBrush x:Key="scb-success-light" Color="{StaticResource clr-success-light}"/>
+    <SolidColorBrush x:Key="scb-success" Color="{StaticResource clr-success}"/>
+    <SolidColorBrush x:Key="scb-success-dark" Color="{StaticResource clr-success-dark}"/>
+
+    <SolidColorBrush x:Key="scb-danger-light" Color="{StaticResource clr-danger-light}"/>
+    <SolidColorBrush x:Key="scb-danger" Color="{StaticResource clr-danger}"/>
+    <SolidColorBrush x:Key="scb-danger-dark" Color="{StaticResource clr-danger-dark}"/>
+
+    <SolidColorBrush x:Key="scb-warning-light" Color="{StaticResource clr-warning-light}"/>
+    <SolidColorBrush x:Key="scb-warning" Color="{StaticResource clr-warning}"/>
+    <SolidColorBrush x:Key="scb-warning-dark" Color="{StaticResource clr-warning-dark}"/>
+
+    <SolidColorBrush x:Key="scb-info-light" Color="{StaticResource clr-info-light}"/>
+    <SolidColorBrush x:Key="scb-info" Color="{StaticResource clr-info}"/>
+    <SolidColorBrush x:Key="scb-info-dark" Color="{StaticResource clr-info-dark}"/>
+
+    <SolidColorBrush x:Key="scb-light" Color="{StaticResource clr-light}"/>
+    <SolidColorBrush x:Key="scb-light-dark" Color="{StaticResource clr-light-dark}"/>
+
+    <SolidColorBrush x:Key="scb-dark-light" Color="{StaticResource clr-dark-light}"/>
+    <SolidColorBrush x:Key="scb-dark" Color="{StaticResource clr-dark}"/>
+    <SolidColorBrush x:Key="scb-dark-dark" Color="{StaticResource clr-dark-dark}"/>
+
+    <SolidColorBrush x:Key="scb-default" Color="{StaticResource clr-default}"/>
+    <SolidColorBrush x:Key="scb-default-dark" Color="{StaticResource clr-default-dark}"/>
+
+    <SolidColorBrush x:Key="scb-text-dark" Color="{StaticResource clr-text-dark}"/>
+    <SolidColorBrush x:Key="scb-text-light" Color="{StaticResource clr-text-light}"/>
+    
+    
+    
+</ResourceDictionary>

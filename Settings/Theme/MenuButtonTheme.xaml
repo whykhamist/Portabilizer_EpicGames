@@ -16,7 +16,7 @@
                               HorizontalAlignment="Stretch"
                               Background="{TemplateBinding Background}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
@@ -25,7 +25,19 @@
                                             VerticalAlignment="Center"
                                             Foreground="{TemplateBinding Foreground}"
                                             Background="{TemplateBinding Background}"
-                                            Margin="5,0,0,0"/>
+                                            Margin="5,0,0,0"
+                                            Width="20">
+                                <ContentControl.Style>
+                                    <Style TargetType="{x:Type ContentControl}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="Template" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
 
                             <TextBlock Grid.Column="1"
                                        Text="{TemplateBinding Content}"
@@ -37,14 +49,17 @@
                 </Setter.Value>
             </Setter>
 
-            <Setter Property="Background" Value="#FF2C2C2C"/>
+            <Setter Property="Background" Value="{StaticResource scb-dark}"/>
             <Setter Property="BorderThickness" Value="0"/>
             
         </Style.Setters>
 
         <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-dark-dark}"/>
+            </Trigger>
             <Trigger Property="IsChecked" Value="true">
-                <Setter Property="Background" Value="#4c4c4c"/>
+                <Setter Property="Background" Value="{StaticResource scb-dark-light}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

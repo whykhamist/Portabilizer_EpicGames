@@ -3,125 +3,145 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Settings"
-        xmlns:viewModel="clr-namespace:Settings.MVVM.ViewModel"
+        xmlns:converters="clr-namespace:Settings.Core.Converters"
         mc:Ignorable="d" Background="Transparent" Foreground="WhiteSmoke"
         AllowsTransparency="true"  FontSize="12"
         Title="Epic Games Portable Settings"
-        Height="350" Width="600" WindowStartupLocation="CenterScreen"
+        Height="400" Width="600" WindowStartupLocation="CenterScreen"
         Icon="/Images/Epic Games Portable.png"  
-        ResizeMode="NoResize" WindowStyle="None">
-
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
+        ResizeMode="NoResize" WindowStyle="None"
+        x:Name="SettingsMainWindow">
 
     <Canvas >
-        <Border x:Name="OuterGlow" Margin="10" Background="Transparent"
+        <Border x:Name="ShadowBorder"
+                Margin="10"
+                Background="Transparent"
                 BorderBrush="Black"
-                Width="580"
-                Height="330"
                 Style="{StaticResource BorderShadow}">
+            <Border.Width>
+                <MultiBinding Converter="{converters:WidthConverter}">
+                    <Binding Path="Width" ElementName="SettingsMainWindow"/>
+                    <Binding Path="Margin" RelativeSource="{RelativeSource Self}"/>
+                </MultiBinding>
+            </Border.Width>
+
+            <Border.Height>
+                <MultiBinding Converter="{converters:HeightConverter}">
+                    <Binding Path="Height" ElementName="SettingsMainWindow"/>
+                    <Binding Path="Margin" RelativeSource="{RelativeSource Self}"/>
+                </MultiBinding>
+            </Border.Height>
         </Border>
 
-        <Border Margin="10" Width="580" Height="330">
+        <Border Margin="{Binding ElementName=ShadowBorder, Path=Margin}"
+                Width="{Binding ElementName=ShadowBorder, Path=Width}"
+                Height="{Binding ElementName=ShadowBorder, Path=Height}"
+                CornerRadius="10">
+            
             <Border.Clip>
-                <RectangleGeometry RadiusX="10"
-                                   RadiusY="10"
-                                   Rect="0,0,580,330"/>
+                <MultiBinding Converter="{converters:RectangleConverter}">
+                        <Binding Path="ActualWidth"
+                             RelativeSource="{RelativeSource Self}"/>
+                        <Binding Path="ActualHeight"
+                             RelativeSource="{RelativeSource Self}"/>
+                        <Binding Path="CornerRadius"
+                             RelativeSource="{RelativeSource Self}"/>
+                    </MultiBinding>
             </Border.Clip>
 
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                    <GradientStop Color="#3C3C3C" Offset="0.0"/>
-                    <GradientStop Color="Black" Offset="1"/>
+                    <GradientStop Color="{StaticResource clr-dark-light}" Offset="0.0"/>
+                    <GradientStop Color="{StaticResource clr-dark}" Offset="0.5"/>
+                    <GradientStop Color="{StaticResource clr-dark-dark}" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
 
-            <DockPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" ></ColumnDefinition>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" ></ColumnDefinition>
 
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="34px"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0"  x:Name="HeaderGrid" Background="#1c1c1c" MouseMove="HeaderGrid_MouseMove">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Label Content="{Binding ElementName=SettingsMainWindow, Path=Title}"
+                               FontSize="24" Foreground="WhiteSmoke"
+                               FontWeight="Bold"/>
+                    </StackPanel>
+                    <Button x:Name="ExitBtn" Grid.Column="2"
+                            Click="ExitBtn_Click"
+                            Style="{StaticResource btn-exit}">
+
+                        <ContentControl Grid.Column="0"
+                                        Template="{StaticResource fa-times}"
+                                        Width="10" Height="10"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Foreground="WhiteSmoke"
+                                        Margin="5,0,5,0"/>
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="125"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="34px"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Grid.Column="0"  x:Name="HeaderGrid" Background="#1c1c1c" MouseMove="HeaderGrid_MouseMove">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="45"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock FontSize="20" FontWeight="Bold">Epic Games Portable Settings!</TextBlock>
-                        </StackPanel>
-                        <Button x:Name="ExitBtn" Grid.Column="2" Click="ExitBtn_Click" Style="{StaticResource Flat}">
 
-                            <ContentControl Grid.Column="0"
-                                            Template="{StaticResource fa-times}"
-                                            Width="10" Height="10"
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Center"
-                                            Foreground="WhiteSmoke"
-                                            Margin="5,0,0,0"/>
-                        </Button>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="125"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-
-                        <StackPanel Grid.Row="0" Grid.Column="0" Background="#2c2c2c">
-                            <RadioButton Content="Home"
-                                         Height="35"
-                                         Foreground="WhiteSmoke"
-                                         FontSize="16"
-                                         FontWeight="DemiBold"
-                                         Style="{StaticResource MenuButtonTheme}"
-                                         IsChecked="True"
-                                         Tag="{StaticResource fa-home}"
-                                         Command="{Binding HomeViewCommand}">
+                    <StackPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource scb-dark}">
+                        <RadioButton Content="Home"
+                                        Height="35"
+                                        Foreground="{StaticResource scb-light-dark}"
+                                        FontSize="16"
+                                        FontWeight="DemiBold"
+                                        Style="{StaticResource MenuButtonTheme}"
+                                        IsChecked="True"
+                                        Tag="{StaticResource fa-home}"
+                                        Command="{Binding HomeViewCommand}">
                                 
-                            </RadioButton>
+                        </RadioButton>
 
-                            <RadioButton Content="Settings"
-                                            Height="35"
-                                            Foreground="WhiteSmoke"
-                                            FontSize="16"
-                                            FontWeight="DemiBold"
-                                         Tag="{StaticResource fa-cogs}"
-                                            Style="{StaticResource MenuButtonTheme}"
-                                            Command="{Binding SettingsViewCommand}">
-                            </RadioButton>
+                        <RadioButton Content="Settings"
+                                        Height="35"
+                                        Foreground="{StaticResource scb-light-dark}"
+                                        FontSize="16"
+                                        FontWeight="DemiBold"
+                                        Tag="{StaticResource fa-cogs}"
+                                        Style="{StaticResource MenuButtonTheme}"
+                                        Command="{Binding SettingsViewCommand}">
+                        </RadioButton>
 
-                            <RadioButton Content="Epic Games"
-                                         Height="35"
-                                         Foreground="WhiteSmoke"
-                                         FontSize="16"
-                                         FontWeight="DemiBold"
-                                         Style="{StaticResource MenuButtonTheme}"
-                                         Command="{Binding EpicGamesViewCommand}"
-                                         Tag="{StaticResource EpicGamesLogo}">
+                        <RadioButton Content="Epic Games"
+                                        Height="35"
+                                        Foreground="{StaticResource scb-light-dark}"
+                                        FontSize="16"
+                                        FontWeight="DemiBold"
+                                        Style="{StaticResource MenuButtonTheme}"
+                                        Command="{Binding EpicGamesViewCommand}"
+                                        Tag="{StaticResource EpicGamesLogo}">
 
-                            </RadioButton>
-                        </StackPanel>
+                        </RadioButton>
+                    </StackPanel>
 
-                        <ContentControl Grid.Row="0"
-                                        Grid.Column="1"
-                                        Margin="10"
-                                        Content="{Binding CurrentView}">
+                    <ContentControl Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="10"
+                                    Content="{Binding CurrentView}">
 
-                        </ContentControl>
-                    </Grid>
+                    </ContentControl>
                 </Grid>
-
-            </DockPanel>
+            </Grid>
 
         </Border>
     </Canvas>

@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
     <Style x:Key="btn" TargetType="Button">
         <Setter Property="FontFamily" Value="Helvetica Neue,Helvetica,Arial,sans-serif"/>
         <Setter Property="FontSize" Value="12"/>
@@ -41,190 +42,295 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="btn-default" TargetType="Button" BasedOn="{StaticResource btn}">
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <SolidColorBrush Color="#333"/>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="#fff"/>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="BorderBrush">
-            <Setter.Value>
-                <SolidColorBrush Color="#ccc"/>
-            </Setter.Value>
-        </Setter>
+        <Style.Setters>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <SolidColorBrush Color="{StaticResource clr-text-dark}"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="{StaticResource clr-default}"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="{StaticResource clr-default-dark}"/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#e6e6e6"/>
-                <Setter Property="BorderBrush" Value="#adadad"/>
+                <Setter Property="Background" Value="{StaticResource scb-light-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-dark-light}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#e6e6e6"/>
-                <Setter Property="BorderBrush" Value="#adadad"/>
+                <Setter Property="Background" Value="{StaticResource scb-light-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-dark-light}"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
-                <Setter Property="Background" Value="#e6e6e6"/>
-                <Setter Property="BorderBrush" Value="#adadad"/>
+                <Setter Property="Background" Value="{StaticResource scb-light-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-dark-light}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="btn-primary" TargetType="Button" BasedOn="{StaticResource btn}">
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="#fff"/>
+                <SolidColorBrush Color="{StaticResource clr-text-light}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="#428bca"/>
+                <SolidColorBrush Color="{StaticResource clr-primary}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="BorderBrush">
             <Setter.Value>
-                <SolidColorBrush Color="#357ebd"/>
+                <SolidColorBrush Color="{StaticResource clr-primary-dark}"/>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#3071a9"/>
-                <Setter Property="BorderBrush" Value="#285e8e"/>
+                <Setter Property="Background" Value="{StaticResource scb-primary-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-primary}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#3071a9"/>
-                <Setter Property="BorderBrush" Value="#285e8e"/>
+                <Setter Property="Background" Value="{StaticResource scb-primary}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-primary-dark}"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
-                <Setter Property="Background" Value="#3071a9"/>
-                <Setter Property="BorderBrush" Value="#285e8e"/>
+                <Setter Property="Background" Value="{StaticResource scb-primary-light}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-primary}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <Style x:Key="btn-secondary" TargetType="Button" BasedOn="{StaticResource btn}">
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource clr-text-light}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource clr-secondary}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource clr-secondary-dark}"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-secondary-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-primary}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-secondary}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-secondary-dark}"/>
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-secondary-light}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-secondary}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <Style x:Key="btn-success" TargetType="Button" BasedOn="{StaticResource btn}">
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="#fff"/>
+                <SolidColorBrush Color="{StaticResource clr-text-light}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="#5cb85c"/>
+                <SolidColorBrush Color="{StaticResource clr-success}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="BorderBrush">
             <Setter.Value>
-                <SolidColorBrush Color="#4cae4c"/>
+                <SolidColorBrush Color="{StaticResource clr-success-dark}"/>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#449d44"/>
-                <Setter Property="BorderBrush" Value="#398439"/>
+                <Setter Property="Background" Value="{StaticResource scb-success-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-success-light}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#449d44"/>
-                <Setter Property="BorderBrush" Value="#398439"/>
+                <Setter Property="Background" Value="{StaticResource scb-success}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-success-dark}"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
-                <Setter Property="Background" Value="#449d44"/>
-                <Setter Property="BorderBrush" Value="#398439"/>
+                <Setter Property="Background" Value="{StaticResource scb-success-light}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-success}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="btn-info" TargetType="Button" BasedOn="{StaticResource btn}">
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="#fff"/>
+                <SolidColorBrush Color="{StaticResource clr-text-light}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="#5bc0de"/>
+                <SolidColorBrush Color="{StaticResource clr-info}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="BorderBrush">
             <Setter.Value>
-                <SolidColorBrush Color="#46b8da"/>
+                <SolidColorBrush Color="{StaticResource clr-info-dark}"/>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#31b0d5"/>
-                <Setter Property="BorderBrush" Value="#269abc"/>
+                <Setter Property="Background" Value="{StaticResource scb-info-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-info-light}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#31b0d5"/>
-                <Setter Property="BorderBrush" Value="#269abc"/>
+                <Setter Property="Background" Value="{StaticResource scb-info}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-info-dark}"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
-                <Setter Property="Background" Value="#31b0d5"/>
-                <Setter Property="BorderBrush" Value="#269abc"/>
+                <Setter Property="Background" Value="{StaticResource scb-info-light}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-info}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="btn-warning" TargetType="Button" BasedOn="{StaticResource btn}">
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="#fff"/>
+                <SolidColorBrush Color="{StaticResource clr-text-light}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="#f0ad4e"/>
+                <SolidColorBrush Color="{StaticResource clr-warning}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="BorderBrush">
             <Setter.Value>
-                <SolidColorBrush Color="#eea236"/>
+                <SolidColorBrush Color="{StaticResource clr-warning-dark}"/>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#ec971f"/>
-                <Setter Property="BorderBrush" Value="#d58512"/>
+                <Setter Property="Background" Value="{StaticResource scb-warning-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-warning-light}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#ec971f"/>
-                <Setter Property="BorderBrush" Value="#d58512"/>
+                <Setter Property="Background" Value="{StaticResource scb-warning}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-warning-dark}"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
-                <Setter Property="Background" Value="#ec971f"/>
-                <Setter Property="BorderBrush" Value="#d58512"/>
+                <Setter Property="Background" Value="{StaticResource scb-warning-light}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-warning}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="btn-danger" TargetType="Button" BasedOn="{StaticResource btn}">
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="#fff"/>
+                <SolidColorBrush Color="{StaticResource clr-text-light}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="#d9534f"/>
+                <SolidColorBrush Color="{StaticResource clr-danger}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="BorderBrush">
             <Setter.Value>
-                <SolidColorBrush Color="#d43f3a"/>
+                <SolidColorBrush Color="{StaticResource clr-danger-dark}"/>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#c9302c"/>
-                <Setter Property="BorderBrush" Value="#ac2925"/>
+                <Setter Property="Background" Value="{StaticResource scb-danger-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-danger-light}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#c9302c"/>
-                <Setter Property="BorderBrush" Value="#ac2925"/>
+                <Setter Property="Background" Value="{StaticResource scb-danger}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-danger-dark}"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
-                <Setter Property="Background" Value="#c9302c"/>
-                <Setter Property="BorderBrush" Value="#ac2925"/>
+                <Setter Property="Background" Value="{StaticResource scb-danger-light}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-danger}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <Style x:Key="btn-dark" TargetType="Button" BasedOn="{StaticResource btn}">
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource clr-text-light}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource clr-dark}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource clr-dark-dark}"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-dark-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-dark-light}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-dark}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-dark-dark}"/>
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-dark-light}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-dark}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="btn-exit" TargetType="Button" BasedOn="{StaticResource btn}">
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource clr-text-light}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="Transparent"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="Transparent"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-danger}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-danger-dark}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-danger-light}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-danger}"/>
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                <Setter Property="Background" Value="{StaticResource scb-danger-light}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource scb-danger}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

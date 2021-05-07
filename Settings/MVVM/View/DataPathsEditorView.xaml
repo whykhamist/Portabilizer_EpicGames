@@ -1,0 +1,256 @@
+﻿<Window x:Class="Settings.MVVM.View.DataPathsEditorView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:Settings.MVVM.View"
+        xmlns:converters="clr-namespace:Settings.Core.Converters"
+        xmlns:viewmodel="clr-namespace:Settings.MVVM.ViewModel"
+        mc:Ignorable="d" ResizeMode="NoResize" WindowStyle="None"
+        x:Name="DataPathEditorWindow" Background="Transparent"
+        AllowsTransparency="true" Foreground="{StaticResource scb-light}"
+        FontSize="12" WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="false" 
+        Title="Data Paths Editor" Height="500" Width="800">
+    
+    <Window.Resources>
+        <converters:RectangleConverter x:Key="rectConverter" />
+    </Window.Resources>
+    
+    <Canvas>
+        <Border x:Name="ShadowBorder"
+                Margin="10"
+                Background="Transparent"
+                BorderBrush="{StaticResource scb-dark-dark}"
+                Style="{StaticResource BorderShadow}">
+            
+            <Border.Width>
+                <MultiBinding Converter="{converters:WidthConverter}">
+                    <Binding Path="Width" ElementName="DataPathEditorWindow"/>
+                    <Binding Path="Margin" RelativeSource="{RelativeSource Self}"/>
+                </MultiBinding>
+            </Border.Width>
+            
+            <Border.Height>
+                <MultiBinding Converter="{converters:HeightConverter}">
+                    <Binding Path="Height" ElementName="DataPathEditorWindow"/>
+                    <Binding Path="Margin" RelativeSource="{RelativeSource Self}"/>
+                </MultiBinding>
+            </Border.Height>
+            
+        </Border>
+
+        <Border x:Name="MainBorder"
+                Margin="{Binding ElementName=ShadowBorder, Path=Margin}"
+                Width="{Binding ElementName=ShadowBorder, Path=Width}"
+                Height="{Binding ElementName=ShadowBorder, Path=Height}"
+                CornerRadius="10">
+            
+            <Border.Clip>
+                <MultiBinding Converter="{converters:RectangleConverter}">
+                    <Binding Path="ActualWidth"
+                             RelativeSource="{RelativeSource Self}"/>
+                    <Binding Path="ActualHeight"
+                             RelativeSource="{RelativeSource Self}"/>
+                    <Binding Path="CornerRadius"
+                             RelativeSource="{RelativeSource Self}"/>
+                </MultiBinding>
+            </Border.Clip>
+
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,2" >
+                    <GradientStop Color="{StaticResource clr-dark-light}" Offset="0.0"/>
+                    <GradientStop Color="{StaticResource clr-dark}" Offset="0.5"/>
+                    <GradientStop Color="{StaticResource clr-dark-dark}" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="34px"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0"  x:Name="HeaderGrid" Background="{StaticResource scb-dark-dark}" MouseMove="HeaderGrid_MouseMove">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Label Content="{Binding ElementName=DataPathEditorWindow, Path=Title}"
+                               FontSize="24" Foreground="WhiteSmoke"
+                               FontWeight="Bold"/>
+                    </StackPanel>
+                    <Button x:Name="ExitBtn" Grid.Column="2"
+                            Style="{StaticResource btn-exit}"
+                            IsCancel="true"
+                            Command="{Binding CancelCommand}">
+
+                        <ContentControl Grid.Column="0"
+                                        Template="{StaticResource fa-times}"
+                                        Width="10" Height="10"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Foreground="WhiteSmoke"
+                                        Margin="5,0,5,0"/>
+                    </Button>
+                </Grid>
+                <Border Grid.Row="1"
+                        Padding="5"
+                        Margin="15,5,15,15"
+                        BorderThickness="1"
+                        BorderBrush="DimGray">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+            
+                        <Border Grid.Row="0"
+                                BorderThickness="2"
+                                BorderBrush="DimGray">
+
+                                <Grid>
+                                    
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <ItemsControl Grid.Column="0"
+                                                  Grid.Row="1"
+                                                  ItemsSource="{Binding DataPaths}"
+                                                  Background="{StaticResource scb-dark}">
+                                        
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <RadioButton Content="{Binding GroupName}"
+                                                             Height="35"
+                                                             Foreground="{StaticResource scb-light-dark}"
+                                                             FontSize="16"
+                                                             FontWeight="DemiBold"
+                                                             Style="{StaticResource MenuButtonTheme}"
+                                                             Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.EditPathEditorCmd}"
+                                                             CommandParameter="{Binding}"
+                                                             GroupName="DPGroupName"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                            
+                                    </ItemsControl>
+
+                                <ContentControl Grid.Row="1"
+                                                Grid.Column="1"
+                                                Content="{Binding PathEditorView}">
+                                    <ContentControl.Style>
+                                        <Style TargetType="{x:Type ContentControl}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Content}"
+                                                             Value="{x:Null}">
+                                                    <Setter Property="ContentControl.Template" Value="{StaticResource NoData}"/>
+
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentControl.Style>
+                                </ContentControl>
+
+                                </Grid>
+                        </Border>
+                        
+                        <Grid Grid.Row="1"
+                              Margin="-5 5 -5 0">
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!--<Button x:Name="AddDPBtn"
+                                    Grid.Column="0"
+                                    Margin="5 0 5 0"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding AddDataPathCmd}"
+                                    Style="{StaticResource btn-primary}">
+                            
+                                <ContentControl
+                                            Template="{StaticResource fa-plus}"
+                                            Width="16" Height="16"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Foreground="WhiteSmoke"/>
+                            </Button>-->
+                            
+                            <Button x:Name="SaveBtn"
+                                    Grid.Column="1"
+                                    Margin="5 0 5 0"
+                                    HorizontalAlignment="Stretch"
+                                    Style="{StaticResource btn-success}"
+                                    IsDefault="True"
+                                    Command="{Binding OkCommand}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ContentControl Grid.Column="0"
+                                                    Template="{StaticResource fa-save}" 
+                                                    Width="14" Height="14"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Foreground="WhiteSmoke"/>
+                                    
+                                    <TextBlock Text="Save"
+                                               Grid.Column="1"
+                                               FontSize="14"
+                                               FontWeight="DemiBold"
+                                               Margin="5 0 0 0"
+                                               />
+                                </Grid>
+                            </Button>
+                            
+                            <Button x:Name="CancelBtn"
+                                    Grid.Column="2"
+                                    Margin="5 0 5 0"
+                                    HorizontalAlignment="Stretch"
+                                    Style="{StaticResource btn-danger}"
+                                    IsCancel="true"
+                                    Command="{Binding CancelCommand}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ContentControl Grid.Column="0"
+                                                    Template="{StaticResource fa-times}" 
+                                                    Width="14" Height="14"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Foreground="WhiteSmoke"/>
+
+                                    <TextBlock Text="Cancel"
+                                               Grid.Column="1"
+                                               FontSize="14"
+                                               FontWeight="DemiBold"
+                                               Margin="5 0 0 0"
+                                               />
+                                </Grid>
+                            </Button>
+                            
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+        </Border>
+    </Canvas>
+</Window>

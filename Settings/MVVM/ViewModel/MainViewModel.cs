@@ -1,9 +1,12 @@
 ﻿using Settings.Core;
+using Settings.Core.DialogService;
 
 namespace Settings.MVVM.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
+        private readonly IDialogService dialogService;
+
         public RelayCommand HomeViewCommand { get; set; }
         public RelayCommand SettingsViewCommand { get; set; }
         public RelayCommand EpicGamesViewCommand { get; set; }
@@ -22,10 +25,12 @@ namespace Settings.MVVM.ViewModel
         }
 
 
-        public MainViewModel()
+        public MainViewModel(IDialogService dialogService)
         {
+            this.dialogService = dialogService;
+
             HomeVM = new HomeViewModel();
-            SettingsVM = new SettingsViewModel();
+            SettingsVM = new SettingsViewModel(this.dialogService);
             EpicGamesVM = new EpicGamesViewModel();
 
             CurrentView = HomeVM;

@@ -1,5 +1,4 @@
-﻿using Settings.Core;
-using Settings.MVVM.Model;
+﻿using Settings.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +8,9 @@ using Configuration;
 using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Converters;
-using Microsoft.Win32;
-using WinForms = System.Windows.Forms;
+using Settings.Core;
+using Settings.Core.IOService;
+using Settings.Core.DialogService;
 
 namespace Settings.MVVM.ViewModel
 {
@@ -18,9 +18,9 @@ namespace Settings.MVVM.ViewModel
     {
         private Config UserConfig { get;set; }
         private static Config PortableConfig { get { return new Portable.Configuration(); } }
+        private readonly IDialogService dialogService;
 
-        public RelayCommand BrowseExecutable { get; set; }
-        public RelayCommand BrowseDataFolder { get; set; }
+        #region Public Properties
 
         public string Title { get
             {
@@ -126,8 +126,17 @@ namespace Settings.MVVM.ViewModel
             }
         }
 
-        public SettingsViewModel()
+        public RelayCommand BrowseExecCmd { get; set; }
+
+        public RelayCommand BrowseDataFolderCmd { get; set; }
+
+        public RelayCommand OpenDPEditorCmd { get; set; }
+
+        #endregion
+
+        public SettingsViewModel(IDialogService dialogService)
         {
+            this.dialogService = dialogService;
             UserConfig = new Config();
 
             if (File.Exists(Constants.ConfigFileName))
@@ -135,13 +144,14 @@ namespace Settings.MVVM.ViewModel
                 UserConfig = ConfigReader.Read(Constants.ConfigFileName);
                 var tmp = UserConfig.DataPaths;
                 UserConfig = PortableConfig.Merge(UserConfig);
-                UserConfig.DataPaths = tmp;
+                //UserConfig.DataPaths = tmp;
             }
 
             SaveConfig();
 
-            BrowseExecutable = new RelayCommand(o => { BrowseExecutableFunc(); });
-            BrowseDataFolder = new RelayCommand(o => { BrowseDataFolderFunc(); });
+            BrowseExecCmd = new RelayCommand(o => BrowseExec());
+            BrowseDataFolderCmd = new RelayCommand(o => BrowseDataFolder());
+            OpenDPEditorCmd = new RelayCommand(o => OpenDataPathsEditor());
         }
 
         private void SaveConfig()
@@ -159,31 +169,35 @@ namespace Settings.MVVM.ViewModel
             }
         }
 
-        private void BrowseExecutableFunc()
+        private void BrowseExec()
         {
-            OpenFileDialog OFD = new OpenFileDialog();
-            OFD.Title = "Browse for Executable";
-
-            OFD.InitialDirectory = Environment.CurrentDirectory;
-            if (OFD.ShowDialog() == true)
+            IOService fileDialog = new OpenFileDialogService();
+            string output = fileDialog.OpenDialog("Browse for executable file.", Environment.CurrentDirectory);
+            if (!string.IsNullOrWhiteSpace(output))
             {
-                Executable = OFD.FileName.Replace($@"{Environment.CurrentDirectory}\", "");
+                Executable = output.Replace($"{Environment.CurrentDirectory}", "");
             }
         }
 
-        private void BrowseDataFolderFunc()
+        private void BrowseDataFolder()
         {
-            var FBD = new WinForms.FolderBrowserDialog
+            IOService folderDialog = new OpenFolderDIalogService();
+            string output = folderDialog.OpenDialog("Browse for Data Folder.", Environment.CurrentDirectory);
+            if (!string.IsNullOrWhiteSpace(output))
             {
-                ShowNewFolderButton = true,
-                SelectedPath = Environment.CurrentDirectory
-            };
-
-            if (FBD.ShowDialog() == WinForms.DialogResult.OK)
-            {
-                DataFolder = FBD.SelectedPath.Replace(@$"{Environment.CurrentDirectory}\", "");
+                DataFolder = output.Replace( $"{Environment.CurrentDirectory}", "");
             }
         }
 
+        private void OpenDataPathsEditor()
+        {
+            var vm = new DataPathsEditorViewModel(DataPaths);
+            bool? result = this.dialogService.ShowDialog(vm);
+
+            if (result.HasValue && result.Value)
+            {
+                DataPaths = Helpers.EditorDPToConfigDP(vm.DataPaths);
+            }
+        }
     }
 }
