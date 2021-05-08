@@ -3,10 +3,10 @@
     
     <ControlTemplate x:Key="NoData">
         
-        <Border BorderThickness="0 0 0 1"
-                Margin="5 0"
+        <Border BorderThickness="0 1 0 1"
+                Margin="5 10"
                 Height="75"
-                VerticalAlignment="top">
+                VerticalAlignment="Top">
             
             <Border.Style>
                 <Style TargetType="{x:Type Border}">
@@ -24,13 +24,25 @@
                 </Style>
             </Border.Style>
 
-            <TextBlock Text=">> No Data &lt;&lt;"
-                       Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=BorderBrush}"
+            <TextBlock Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=BorderBrush}"
                        HorizontalAlignment="Stretch"
+                       VerticalAlignment="Center"
                        TextAlignment="Center"
                        FontSize="18"
                        FontStyle="Italic"
-                       Padding="15 24 15 24"/>
+                       Padding="15 24 15 24">
+                
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Text" Value="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Tag}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Tag}" Value="{x:Null}">
+                                <Setter Property="Text" Value=">> No Data &lt;&lt;"/>
+                            </DataTrigger> 
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
         </Border>
         

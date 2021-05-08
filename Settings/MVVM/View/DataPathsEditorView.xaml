@@ -10,8 +10,8 @@
         x:Name="DataPathEditorWindow" Background="Transparent"
         AllowsTransparency="true" Foreground="{StaticResource scb-light}"
         FontSize="12" WindowStartupLocation="CenterScreen"
-        ShowInTaskbar="false" 
-        Title="Data Paths Editor" Height="500" Width="800">
+        ShowInTaskbar="false" Title="Data Paths Editor"
+        Height="500" Width="800">
     
     <Window.Resources>
         <converters:RectangleConverter x:Key="rectConverter" />
@@ -115,46 +115,115 @@
                                 BorderThickness="2"
                                 BorderBrush="DimGray">
 
-                                <Grid>
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Column="0"
+                                      Grid.Row="1"
+                                      Background="{StaticResource scb-dark}">
                                     
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="150"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
+                                        <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <ItemsControl Grid.Column="0"
-                                                  Grid.Row="1"
-                                                  ItemsSource="{Binding DataPaths}"
-                                                  Background="{StaticResource scb-dark}">
-                                        
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <RadioButton Content="{Binding GroupName}"
-                                                             Height="35"
-                                                             Foreground="{StaticResource scb-light-dark}"
-                                                             FontSize="16"
-                                                             FontWeight="DemiBold"
-                                                             Style="{StaticResource MenuButtonTheme}"
-                                                             Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.EditPathEditorCmd}"
-                                                             CommandParameter="{Binding}"
-                                                             GroupName="DPGroupName"/>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
+                                    <ScrollViewer Grid.Row="0"
+                                                       MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Width}"
+                                                  HorizontalScrollBarVisibility="Disabled"
+                                                  VerticalScrollBarVisibility="Auto">
+
+                                        <ItemsControl  Grid.Row="0"
+                                                       Margin="0 0 0 5"
+                                                       ItemsSource="{Binding DataPaths}">
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+
+                                                    <Border BorderThickness="0 0 0 1"
+                                                            BorderBrush="{StaticResource scb-light-dark}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <RadioButton Grid.Column="0"
+                                                                         Height="35"
+                                                                         Content="{Binding GroupName}"
+                                                                         Foreground="{StaticResource scb-light-dark}"
+                                                                         FontSize="16"
+                                                                         FontWeight="DemiBold"
+                                                                         Style="{StaticResource MenuButtonTheme}"
+                                                                         Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.EditPathEditorCmd}"
+                                                                         CommandParameter="{Binding}"
+                                                                         GroupName="DPGroupName"
+                                                                         IsChecked="{Binding IsFirst}"/>
+
+
+                                                            <Button Grid.Column="1"
+                                                                Padding="2 3"
+                                                                MaxHeight="24"
+                                                                Style="{StaticResource btn-danger}"
+                                                                Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.DeletePathEditorCmd}"
+                                                                CommandParameter="{Binding}">
+
+                                                                <Button.Content>
+
+                                                                    <ContentControl Template="{StaticResource fa-times}" 
+                                                                                Width="8" Height="8"
+                                                                                VerticalAlignment="Center"
+                                                                                HorizontalAlignment="Center"
+                                                                                Foreground="WhiteSmoke"/>
+
+                                                                </Button.Content>
+
+                                                            </Button>
+
+                                                        </Grid>
+
+                                                    </Border>
+                                                </DataTemplate>
+
+                                            </ItemsControl.ItemTemplate>
+
+                                        </ItemsControl>
+                                    </ScrollViewer>
+
+                                    <Button Grid.Row="1"
+                                            Margin="0 5 0 0"
+                                            Padding="5"
+                                            Style="{StaticResource btn-primary}"
+                                            Command="{Binding AddDataPathsCmd}">
+                                        <Button.Content>
                                             
-                                    </ItemsControl>
+                                            <ContentControl Template="{StaticResource fa-plus}" 
+                                                    Width="14" Height="14"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Foreground="WhiteSmoke"/>
+                                            
+                                        </Button.Content>
+                                    </Button>
+
+                                </Grid>
 
                                 <ContentControl Grid.Row="1"
                                                 Grid.Column="1"
-                                                Content="{Binding PathEditorView}">
+                                                Content="{Binding PathEditorView}"
+                                                Tag="No item Selected">
                                     <ContentControl.Style>
                                         <Style TargetType="{x:Type ContentControl}">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Content}"
-                                                             Value="{x:Null}">
+                                                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Content}" Value="{x:Null}">
+
                                                     <Setter Property="ContentControl.Template" Value="{StaticResource NoData}"/>
 
                                                 </DataTrigger>
@@ -163,7 +232,7 @@
                                     </ContentControl.Style>
                                 </ContentControl>
 
-                                </Grid>
+                            </Grid>
                         </Border>
                         
                         <Grid Grid.Row="1"

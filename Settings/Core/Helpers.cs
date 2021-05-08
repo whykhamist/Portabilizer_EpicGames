@@ -19,13 +19,16 @@ namespace Settings.Core
         public static ObservableCollection<DataPathsModel> ConfigDPToEditorDP(List<Configuration.DataPaths> ConfDP)
         {
             var tmpDP = new ObservableCollection<DataPathsModel>();
+            int x = 0;
             foreach (Configuration.DataPaths dp in ConfDP)
             {
                 tmpDP.Add(new DataPathsModel
                 {
+                    IsFirst = (x == 0),
                     GroupName = dp.GroupName,
                     Paths = DictionaryPathstoOCPathsModel(dp.Paths)
                 });
+                x++;
             }
             return tmpDP;
         }

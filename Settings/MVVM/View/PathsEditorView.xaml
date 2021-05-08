@@ -52,8 +52,8 @@
                     BorderThickness="1"
                     Margin="5">
 
-                <ScrollViewer HorizontalScrollBarVisibility="Hidden"
-                              VerticalScrollBarVisibility="Visible">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
                     
                     <ItemsControl ItemsSource="{Binding DataPaths.Paths}">
                         <ItemsControl.Style>
@@ -86,7 +86,6 @@
                                     <TextBox Grid.Column="1"
                                              Text="{Binding Path}"
                                              Padding="3 5 3 5"
-                                             MaxWidth="300"
                                              Margin="5"
                                              Style="{StaticResource txtBox}"/>
 

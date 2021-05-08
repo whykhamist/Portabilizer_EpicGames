@@ -42,7 +42,8 @@
                             <TextBlock Grid.Column="1"
                                        Text="{TemplateBinding Content}"
                                        VerticalAlignment="Center"
-                                       Margin="5,0,0,0"/>
+                                       Margin="5 0 0 0"
+                                       TextTrimming="CharacterEllipsis"/>
 
                         </Grid>
                     </ControlTemplate>

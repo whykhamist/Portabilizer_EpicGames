@@ -7,5 +7,7 @@ namespace Settings.MVVM.Model
         public string GroupName { get; set; }
 
         public ObservableCollection<PathsModel> Paths { get; set; }
+
+        public bool IsFirst { get; set; }
     }
 }

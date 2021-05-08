@@ -4,7 +4,7 @@
     <Style x:Key="btn" TargetType="Button">
         <Setter Property="FontFamily" Value="Helvetica Neue,Helvetica,Arial,sans-serif"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="10,4"/>
+        <Setter Property="Padding" Value="10 4"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
