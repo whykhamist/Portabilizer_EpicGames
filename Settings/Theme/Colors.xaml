@@ -39,6 +39,8 @@
     <Color x:Key="clr-text-dark">#4f4f4f</Color>
     <Color x:Key="clr-text-light">#FFFFFF</Color>
 
+    <Color x:Key="clr-border">DimGray</Color>
+    
     <SolidColorBrush x:Key="scb-primary-light" Color="{StaticResource clr-primary-light}"/>
     <SolidColorBrush x:Key="scb-primary" Color="{StaticResource clr-primary}"/>
     <SolidColorBrush x:Key="scb-primary-dark" Color="{StaticResource clr-primary-dark}"/>
@@ -75,6 +77,8 @@
 
     <SolidColorBrush x:Key="scb-text-dark" Color="{StaticResource clr-text-dark}"/>
     <SolidColorBrush x:Key="scb-text-light" Color="{StaticResource clr-text-light}"/>
+    
+    <SolidColorBrush x:Key="scb-border" Color="{StaticResource clr-border}"/>
     
     
     
