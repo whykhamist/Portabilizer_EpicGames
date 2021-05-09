@@ -18,21 +18,23 @@ namespace Settings.Core.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length == 3 && values[0] is double && values[1] is double && values[2] is CornerRadius)
+            if (values.Length == 4 && values[0] is double width && values[1] is double height && values[2] is CornerRadius radius && values[3] is Thickness borderThickness)
             {
-                var width = (double)values[0];
-                var height = (double)values[1];
 
                 if (width < Double.Epsilon || height < Double.Epsilon)
                 {
                     return Geometry.Empty;
                 }
 
-                var radius = (CornerRadius)values[2];
-
                 // Actually we need more complex geometry, when CornerRadius has different values.
                 // But let me not to take this into account, and simplify example for a common value.
-                var clip = new RectangleGeometry(new Rect(0, 0, width, height), radius.TopLeft-1, radius.TopLeft-1);
+                var clip = new RectangleGeometry(
+                    new Rect(
+                        0,
+                        0,
+                        width - borderThickness.Left - borderThickness.Right,
+                        height - borderThickness.Top - borderThickness.Bottom
+                    ), radius.TopLeft - borderThickness.Left/2, radius.TopLeft - borderThickness.Left/2);
                 clip.Freeze();
 
                 return clip;
