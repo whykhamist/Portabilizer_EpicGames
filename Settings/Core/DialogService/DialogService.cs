@@ -6,11 +6,11 @@ namespace Settings.Core.DialogService
 {
     public class DialogService : IDialogService
     {
-        private readonly Window owner;
+        private readonly Window _owner;
 
         public DialogService(Window owner)
         {
-            this.owner = owner;
+            this._owner = owner;
             Mappings = new Dictionary<Type, Type>();
         }
 
@@ -27,20 +27,13 @@ namespace Settings.Core.DialogService
             Mappings.Add(typeof(TViewModel), typeof(TView));
         }
 
-        public bool? ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : IDialogRequestClose
-        {
-            return ShowDialog(viewModel, null);
-        }
-
         public bool? ShowDialog<TViewModel>(TViewModel viewModel, Window owner = null) where TViewModel : IDialogRequestClose
         {
             Type viewType = Mappings[typeof(TViewModel)];
 
             IDialog dialog = (IDialog)Activator.CreateInstance(viewType);
 
-            EventHandler<DialogCloseRequestedEventArgs> handler = null;
-
-            handler = (sender, e) =>
+            void handler(object sender, DialogCloseRequestedEventArgs e)
             {
                 viewModel.CloseRequested -= handler;
 
@@ -52,12 +45,12 @@ namespace Settings.Core.DialogService
                 {
                     dialog.Close();
                 }
-            };
+            }
 
             viewModel.CloseRequested += handler;
 
             dialog.DataContext = viewModel;
-            dialog.Owner = owner;
+            dialog.Owner = owner ?? _owner ?? Application.Current.MainWindow;
 
             return dialog.ShowDialog();
         }

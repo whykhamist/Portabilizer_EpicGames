@@ -7,8 +7,6 @@ namespace Settings.Core.DialogService
         void Register<TViewModel, TView>() where TViewModel : IDialogRequestClose
                                            where TView : IDialog;
 
-        bool? ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : IDialogRequestClose;
-
         bool? ShowDialog<TViewModel>(TViewModel viewModel, Window owner = null) where TViewModel : IDialogRequestClose;
     }
 }
