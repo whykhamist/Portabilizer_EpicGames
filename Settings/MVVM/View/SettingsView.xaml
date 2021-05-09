@@ -6,250 +6,264 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:viewmodel="clr-namespace:Settings.MVVM.ViewModel"
              xmlns:converters="clr-namespace:Settings.Core.Converters"
-             mc:Ignorable="d" Width="430" Height="280">
+             mc:Ignorable="d" d:DesignWidth="430" d:DesignHeight="280">
 
-    <UserControl.Resources>
+    <Border x:Name="MainBorder"
+            BorderThickness="1.5"
+            BorderBrush="{StaticResource scb-border}"
+            CornerRadius="10">
 
-        <DataTemplate x:Key="PathsTemplate">
-            <Grid HorizontalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Key}"/>
-                <TextBlock Grid.Column="1" Text="{Binding Value}"/>
-            </Grid>
-        </DataTemplate>
+        <Border.Style>
+            <Style TargetType="{x:Type Border}">
+                <Style.Setters>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{StaticResource clr-dark}" Opacity="0.25"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+        </Border.Style>
+        
+        <Border>
+            <Border.Clip>
+                <MultiBinding Converter="{converters:RectangleConverter}">
+                    <Binding Path="ActualWidth" ElementName="MainBorder"/>
+                    <Binding Path="ActualHeight" ElementName="MainBorder"/>
+                    <Binding Path="CornerRadius" ElementName="MainBorder"/>
+                    <Binding Path="BorderThickness" ElementName="MainBorder"/>
+                </MultiBinding>
+            </Border.Clip>
 
-        <DataTemplate x:Key="DataPathsTemplate">
-            <Grid Background="WhiteSmoke">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                
-                <TextBox Grid.Row="0"
-                         MaxWidth="150" Width="150"
-                         HorizontalAlignment="Left"
-                         Text="{Binding GroupName}">
-                    <TextBox.Style>
-                        <Style>
-                            
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
-                
-                <ItemsControl Grid.Row="1"
-                              ItemsSource="{Binding Paths}"
-                              ItemTemplate="{StaticResource PathsTemplate}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer.Resources>
+                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">12</sys:Double>
+                </ScrollViewer.Resources>
 
-                </ItemsControl>
-            </Grid>
-        </DataTemplate>
-
-    </UserControl.Resources>
-
-    <Border BorderThickness="1" BorderBrush="WhiteSmoke" CornerRadius="10"
-            Background="#3C3C3C">
-        <Border.Clip>
-            <MultiBinding Converter="{converters:RectangleConverter}">
-                <Binding Path="ActualWidth"
-                             RelativeSource="{RelativeSource Self}"/>
-                <Binding Path="ActualHeight"
-                             RelativeSource="{RelativeSource Self}"/>
-                <Binding Path="CornerRadius"
-                             RelativeSource="{RelativeSource Self}"/>
-            </MultiBinding>
-        </Border.Clip>
-
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ScrollViewer.Resources>
-                <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">12</sys:Double>
-            </ScrollViewer.Resources>
-
-            <StackPanel>
-                <!--#region Title & Resolution Block-->
-                <Grid Margin="10,10,10,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="150"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-
-                    <!--#region Title-->
-                    <TextBlock Text="Title"
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    FontSize="14"
-                                    FontWeight="DemiBold"
-                                    Foreground="WhiteSmoke"/>
-                    <TextBox Margin="10,0,10,0"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Text="{Binding Title}"
-                                    Padding="10,4"
-                                    VerticalContentAlignment="Center">
-                    </TextBox>
-                    <!--#endregion-->
-
-                    <!--#region Resolution-->
-                    <Grid Grid.Column="1" Grid.Row="0">
+                <StackPanel>
+                    <!--#region Title & Resolution Block-->
+                    <Grid Margin="10,10,10,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Text="Width"
-                                       FontSize="14"
-                                       FontWeight="DemiBold"
-                                       Foreground="WhiteSmoke"/>
+                        <!--#region Title-->
+                        <TextBlock Text="Title"
+                                   Grid.Row="0"
+                                   Grid.Column="0"
+                                   FontSize="14"
+                                   FontWeight="DemiBold"/>
+                    
+                        <TextBox Margin="10,0,10,0"
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 Text="{Binding Title}"
+                                 Padding="10,4"
+                                 VerticalContentAlignment="Center"
+                                 Style="{StaticResource txtBox}">
+                        </TextBox>
+                        <!--#endregion-->
 
-                        <TextBlock Text="Height"
-                                       Grid.Column="2"
-                                       FontSize="14"
-                                       FontWeight="DemiBold"
-                                       Foreground="WhiteSmoke"/>
-                    </Grid>
+                        <!--#region Resolution-->
+                        <Grid Grid.Column="1" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="Width"
+                                           FontSize="14"
+                                           FontWeight="DemiBold"/>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                            <TextBlock Text="Height"
+                                           Grid.Column="2"
+                                           FontSize="14"
+                                           FontWeight="DemiBold"/>
+                        </Grid>
 
-                        <TextBox Padding="10,4"
+                        <Grid Grid.Column="1" Grid.Row="1">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Padding="10,4"
                                      Margin="5,0,5,0"
                                      Grid.Column="0"
                                      VerticalContentAlignment="Center"
-                                     Text="{Binding Width}"/>
+                                     Text="{Binding Width}"
+                                     Style="{StaticResource txtBox}"/>
 
 
-                        <TextBlock Text="x"
+                            <TextBlock Text="x"
                                        FontSize="14"
                                        FontWeight="DemiBold"
-                                       Foreground="WhiteSmoke"
                                        Grid.Column="1"/>
 
-                        <TextBox Padding="10,4"
+                            <TextBox Padding="10,4"
                                      Margin="5,0,5,0" Grid.Column="2"
                                      VerticalContentAlignment="Center"
-                                     Text="{Binding Height}"/>
+                                     Text="{Binding Height}"
+                                     Style="{StaticResource txtBox}"/>
+
+                        </Grid>
+                        <!--#endregion-->
 
                     </Grid>
                     <!--#endregion-->
 
-                </Grid>
-                <!--#endregion-->
+                    <!--#region Executable Block-->
+                    <Grid Margin="10,10,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
 
-                <!--#region Executable Block-->
-                <Grid Margin="10,10,10,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
+                        <TextBlock Text="Executable"
+                                       Grid.Column="0"
+                                       Grid.Row="0"
+                                       FontSize="14"
+                                       FontWeight="DemiBold"/>
 
-                    <TextBlock Text="Executable"
+                        <TextBox x:Name="ExecTxt"
+                                 Margin="10,0,10,0"
+                                 Grid.Column="0"
+                                 Grid.Row="1"
+                                 Text="{Binding Executable}"
+                                 Padding="10,4"
+                                 VerticalContentAlignment="Center"
+                                 Style="{StaticResource txtBox}">
+                        </TextBox>
+
+                        <Button x:Name="BrowseExecBtn"
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Style="{StaticResource btn-primary}"
+                                Command="{Binding BrowseExecCmd}">
+
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentControl Grid.Column="0"
+                                                Template="{StaticResource fa-file-alt}"
+                                                Width="16" Height="16"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"/>
+
+                                <TextBlock Text="Browse"
+                                            Grid.Column="1"
+                                            FontSize="12"
+                                            FontWeight="DemiBold"
+                                            Margin="5 0 0 0"
+                                            VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+
+                    </Grid>
+                    <!--#endregion-->
+
+                    <!--#region Data Folder Block-->
+                    <Grid Margin="10,10,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Data Folder"
                                    Grid.Column="0"
                                    Grid.Row="0"
                                    FontSize="14"
-                                   FontWeight="DemiBold"
-                                   Foreground="WhiteSmoke"/>
+                                   FontWeight="DemiBold"/>
 
-                    <TextBox x:Name="ExecTxt"
-                             Margin="10,0,10,0"
-                             Grid.Column="0"
-                             Grid.Row="1"
-                             Text="{Binding Executable}"
-                             Padding="10,4"
-                             VerticalContentAlignment="Center">
-                    </TextBox>
-
-                    <Button x:Name="BrowseExecBtn"
-                            Content="Browse"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Style="{StaticResource btn-primary}"
-                            Command="{Binding BrowseExecCmd}"/>
-
-                </Grid>
-                <!--#endregion-->
-
-                <!--#region Data Folder Block-->
-                <Grid Margin="10,10,10,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Text="Data Folder"
-                               Grid.Column="0"
-                               Grid.Row="0"
-                               FontSize="14"
-                               FontWeight="DemiBold"
-                               Foreground="WhiteSmoke"/>
-
-                    <TextBox x:Name="DataFolderTxt" Margin="10,0,10,0"
-                             Grid.Column="0"
-                             Grid.Row="1"
-                             Text="{Binding DataFolder}"
-                             Padding="10,4"
-                             VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="DataFolderTxt" Margin="10,0,10,0"
+                                 Grid.Column="0"
+                                 Grid.Row="1"
+                                 Text="{Binding DataFolder}"
+                                 Padding="10,4"
+                                 VerticalContentAlignment="Center"
+                                 Style="{StaticResource txtBox}"/>
 
 
-                    <Button x:Name="BrowseDataFolderBtn" Content="Browse"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Style="{StaticResource btn-primary}"
-                            Command="{Binding BrowseDataFolderCmd}"/>
+                        <Button x:Name="BrowseDataFolderBtn"
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Style="{StaticResource btn-primary}"
+                                Command="{Binding BrowseDataFolderCmd}">
 
-                </Grid>
-                <!--#endregion-->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentControl Grid.Column="0"
+                                                        Template="{StaticResource fa-folder-open}" 
+                                                        Width="16" Height="16"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center"/>
 
-                <!--#region Clear Symboli Links Block-->
-                <Grid Margin="10,10,10,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
+                                <TextBlock Text="Browse"
+                                           Grid.Column="1"
+                                           FontSize="12"
+                                           FontWeight="DemiBold"
+                                           Margin="5 0 0 0"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
 
-                    <CheckBox Content="Clear Symbolic Links"
-                              Grid.Column="0"
-                              Grid.Row="0"
-                              Margin="10,0,10,0"
-                              Foreground="WhiteSmoke"
-                              FontSize="14"
-                              FontWeight="DemiBold"
-                              IsChecked="{Binding ClearSymlinks}"/>
+                    </Grid>
+                    <!--#endregion-->
+
+                    <!--#region Clear Symboli Links Block-->
+                    <Grid Margin="10,10,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <CheckBox Content="Clear Symbolic Links"
+                                  Grid.Column="0"
+                                  Grid.Row="0"
+                                  Margin="10,0,10,0"
+                                  Foreground="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Foreground}"
+                                  FontSize="14"
+                                  FontWeight="DemiBold"
+                                  IsChecked="{Binding ClearSymlinks}"/>
 
 
 
-                    <Button Grid.Column="1"
-                            Grid.Row="0"
-                            Style="{StaticResource btn-success}"
-                            Content="Open Data Paths Editor"
-                            HorizontalAlignment="Right"
-                            Command="{Binding OpenDPEditorCmd}"/>
-                </Grid>
-                <!--#endregion-->
-            </StackPanel>
-        </ScrollViewer>
+                        <Button Grid.Column="1"
+                                Grid.Row="0"
+                                Style="{StaticResource btn-success}"
+                                Content="Open Data Paths Editor"
+                                HorizontalAlignment="Right"
+                                Command="{Binding OpenDPEditorCmd}"/>
+                    </Grid>
+                    <!--#endregion-->
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
     </Border>
 </UserControl>

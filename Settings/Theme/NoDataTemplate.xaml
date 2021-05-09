@@ -15,7 +15,7 @@
                         
                         <Setter Property="BorderBrush">
                             <Setter.Value>
-                                <SolidColorBrush Color="{StaticResource clr-default-dark}" Opacity="0.5"/>
+                                <SolidColorBrush Color="{StaticResource clr-border}" Opacity="0.5"/>
                             </Setter.Value>
                         </Setter>
                         

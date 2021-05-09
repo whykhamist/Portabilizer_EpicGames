@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Settings.MVVM.View"
         xmlns:converters="clr-namespace:Settings.Core.Converters"
-        xmlns:viewmodel="clr-namespace:Settings.MVVM.ViewModel"
+        xmlns:viewmodel="clr-namespace:Settings.MVVM.ViewModel" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d" ResizeMode="NoResize" WindowStyle="None"
         x:Name="DataPathEditorWindow" Background="Transparent"
         AllowsTransparency="true" Foreground="{StaticResource scb-light}"
-        FontSize="12" WindowStartupLocation="CenterScreen"
+        FontSize="12" WindowStartupLocation="CenterOwner"
         ShowInTaskbar="false" Title="Data Paths Editor"
         Height="500" Width="800">
     
@@ -21,6 +21,7 @@
         <Border x:Name="ShadowBorder"
                 Margin="10"
                 Background="Transparent"
+                CornerRadius="10"
                 BorderBrush="{StaticResource scb-dark-dark}"
                 Style="{StaticResource BorderShadow}">
             
@@ -37,25 +38,16 @@
                     <Binding Path="Margin" RelativeSource="{RelativeSource Self}"/>
                 </MultiBinding>
             </Border.Height>
-            
+
         </Border>
 
         <Border x:Name="MainBorder"
                 Margin="{Binding ElementName=ShadowBorder, Path=Margin}"
                 Width="{Binding ElementName=ShadowBorder, Path=Width}"
                 Height="{Binding ElementName=ShadowBorder, Path=Height}"
-                CornerRadius="10">
-            
-            <Border.Clip>
-                <MultiBinding Converter="{converters:RectangleConverter}">
-                    <Binding Path="ActualWidth"
-                             RelativeSource="{RelativeSource Self}"/>
-                    <Binding Path="ActualHeight"
-                             RelativeSource="{RelativeSource Self}"/>
-                    <Binding Path="CornerRadius"
-                             RelativeSource="{RelativeSource Self}"/>
-                </MultiBinding>
-            </Border.Clip>
+                CornerRadius="10"
+                BorderThickness="1.5"
+                BorderBrush="{StaticResource scb-border}">
 
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,2" >
@@ -65,261 +57,355 @@
                 </LinearGradientBrush>
             </Border.Background>
 
+            <Border>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="34px"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0"  x:Name="HeaderGrid" Background="{StaticResource scb-dark-dark}" MouseMove="HeaderGrid_MouseMove">
+                <Border.Clip>
+                    <MultiBinding Converter="{converters:RectangleConverter}">
+                        <Binding Path="ActualWidth" ElementName ="MainBorder"/>
+                        <Binding Path="ActualHeight" ElementName ="MainBorder"/>
+                        <Binding Path="CornerRadius" ElementName ="MainBorder"/>
+                        <Binding Path="BorderThickness" ElementName ="MainBorder"/>
+                    </MultiBinding>
+                </Border.Clip>
+                
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="45"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="45"></ColumnDefinition>
+
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Label Content="{Binding ElementName=DataPathEditorWindow, Path=Title}"
-                               FontSize="24" Foreground="WhiteSmoke"
-                               FontWeight="Bold"/>
-                    </StackPanel>
-                    <Button x:Name="ExitBtn" Grid.Column="2"
-                            Style="{StaticResource btn-exit}"
-                            IsCancel="true"
-                            Command="{Binding CancelCommand}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="34px"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-                        <ContentControl Grid.Column="0"
-                                        Template="{StaticResource fa-times}"
-                                        Width="10" Height="10"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        Foreground="WhiteSmoke"
-                                        Margin="5,0,5,0"/>
-                    </Button>
-                </Grid>
-                <Border Grid.Row="1"
-                        Padding="5"
-                        Margin="15,5,15,15"
-                        BorderThickness="1"
-                        BorderBrush="DimGray">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-            
-                        <Border Grid.Row="0"
-                                BorderThickness="2"
-                                BorderBrush="DimGray">
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          x:Name="HeaderGrid"
+                          Background="{StaticResource scb-dark-dark}"
+                          MouseMove="HeaderGrid_MouseMove">
 
-                            <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Label Content="{Binding ElementName=DataPathEditorWindow, Path=Title}"
+                                   FontSize="24" Foreground="WhiteSmoke"
+                                   FontWeight="Bold"/>
+                        </StackPanel>
+                        <Button x:Name="ExitBtn" Grid.Column="2"
+                                Style="{StaticResource btn-exit}"
+                                IsCancel="true"
+                                Command="{Binding CancelCommand}">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="150"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <Grid Grid.Column="0"
-                                      Grid.Row="1"
-                                      Background="{StaticResource scb-dark}">
-                                    
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <ScrollViewer Grid.Row="0"
-                                                       MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Width}"
-                                                  HorizontalScrollBarVisibility="Disabled"
-                                                  VerticalScrollBarVisibility="Auto">
-
-                                        <ItemsControl  Grid.Row="0"
-                                                       Margin="0 0 0 5"
-                                                       ItemsSource="{Binding DataPaths}">
-
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-
-                                                    <Border BorderThickness="0 0 0 1"
-                                                            BorderBrush="{StaticResource scb-light-dark}">
-                                                        <Grid>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="auto"/>
-                                                            </Grid.ColumnDefinitions>
-
-                                                            <RadioButton Grid.Column="0"
-                                                                         Height="35"
-                                                                         Content="{Binding GroupName}"
-                                                                         Foreground="{StaticResource scb-light-dark}"
-                                                                         FontSize="16"
-                                                                         FontWeight="DemiBold"
-                                                                         Style="{StaticResource MenuButtonTheme}"
-                                                                         Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.EditPathEditorCmd}"
-                                                                         CommandParameter="{Binding}"
-                                                                         GroupName="DPGroupName"
-                                                                         IsChecked="{Binding IsFirst}"/>
-
-
-                                                            <Button Grid.Column="1"
-                                                                Padding="2 3"
-                                                                MaxHeight="24"
-                                                                Style="{StaticResource btn-danger}"
-                                                                Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.DeletePathEditorCmd}"
-                                                                CommandParameter="{Binding}">
-
-                                                                <Button.Content>
-
-                                                                    <ContentControl Template="{StaticResource fa-times}" 
-                                                                                Width="8" Height="8"
-                                                                                VerticalAlignment="Center"
-                                                                                HorizontalAlignment="Center"
-                                                                                Foreground="WhiteSmoke"/>
-
-                                                                </Button.Content>
-
-                                                            </Button>
-
-                                                        </Grid>
-
-                                                    </Border>
-                                                </DataTemplate>
-
-                                            </ItemsControl.ItemTemplate>
-
-                                        </ItemsControl>
-                                    </ScrollViewer>
-
-                                    <Button Grid.Row="1"
-                                            Margin="0 5 0 0"
-                                            Padding="5"
-                                            Style="{StaticResource btn-primary}"
-                                            Command="{Binding AddDataPathsCmd}">
-                                        <Button.Content>
-                                            
-                                            <ContentControl Template="{StaticResource fa-plus}" 
-                                                    Width="14" Height="14"
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"
-                                                    Foreground="WhiteSmoke"/>
-                                            
-                                        </Button.Content>
-                                    </Button>
-
-                                </Grid>
-
-                                <ContentControl Grid.Row="1"
-                                                Grid.Column="1"
-                                                Content="{Binding PathEditorView}"
-                                                Tag="No item Selected">
-                                    <ContentControl.Style>
-                                        <Style TargetType="{x:Type ContentControl}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Content}" Value="{x:Null}">
-
-                                                    <Setter Property="ContentControl.Template" Value="{StaticResource NoData}"/>
-
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ContentControl.Style>
-                                </ContentControl>
-
-                            </Grid>
-                        </Border>
-                        
-                        <Grid Grid.Row="1"
-                              Margin="-5 5 -5 0">
-                            
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <!--<Button x:Name="AddDPBtn"
-                                    Grid.Column="0"
-                                    Margin="5 0 5 0"
-                                    HorizontalAlignment="Stretch"
-                                    Command="{Binding AddDataPathCmd}"
-                                    Style="{StaticResource btn-primary}">
-                            
-                                <ContentControl
-                                            Template="{StaticResource fa-plus}"
-                                            Width="16" Height="16"
+                            <ContentControl Grid.Column="0"
+                                            Template="{StaticResource fa-times}"
+                                            Width="10" Height="10"
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Center"
-                                            Foreground="WhiteSmoke"/>
-                            </Button>-->
-                            
-                            <Button x:Name="SaveBtn"
-                                    Grid.Column="1"
-                                    Margin="5 0 5 0"
-                                    HorizontalAlignment="Stretch"
-                                    Style="{StaticResource btn-success}"
-                                    IsDefault="True"
-                                    Command="{Binding OkCommand}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <ContentControl Grid.Column="0"
-                                                    Template="{StaticResource fa-save}" 
-                                                    Width="14" Height="14"
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"
-                                                    Foreground="WhiteSmoke"/>
-                                    
-                                    <TextBlock Text="Save"
-                                               Grid.Column="1"
-                                               FontSize="14"
-                                               FontWeight="DemiBold"
-                                               Margin="5 0 0 0"
-                                               />
-                                </Grid>
-                            </Button>
-                            
-                            <Button x:Name="CancelBtn"
-                                    Grid.Column="2"
-                                    Margin="5 0 5 0"
-                                    HorizontalAlignment="Stretch"
-                                    Style="{StaticResource btn-danger}"
-                                    IsCancel="true"
-                                    Command="{Binding CancelCommand}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <ContentControl Grid.Column="0"
-                                                    Template="{StaticResource fa-times}" 
-                                                    Width="14" Height="14"
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"
-                                                    Foreground="WhiteSmoke"/>
-
-                                    <TextBlock Text="Cancel"
-                                               Grid.Column="1"
-                                               FontSize="14"
-                                               FontWeight="DemiBold"
-                                               Margin="5 0 0 0"
-                                               />
-                                </Grid>
-                            </Button>
-                            
-                        </Grid>
+                                            Foreground="WhiteSmoke"
+                                            Margin="5,0,5,0"/>
+                        </Button>
                     </Grid>
-                </Border>
-            </Grid>
+                    <Border Grid.Row="1"
+                            Padding="5"
+                            Margin="15 5 15 15"
+                            BorderThickness="1"
+                            BorderBrush="{StaticResource scb-border}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
 
+                            <Border Grid.Row="0"
+                                    BorderThickness="2"
+                                    BorderBrush="{StaticResource scb-border}">
+
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Border Grid.Column="0"
+                                            Grid.Row="0"
+                                            BorderThickness="0 0 1 0"
+                                            BorderBrush="{StaticResource scb-border}"
+                                            Background="{StaticResource scb-dark}">
+
+                                    </Border>
+
+                                    <Border Grid.Column="0"
+                                            Grid.Row="1"
+                                            BorderThickness="0 0 1 0"
+                                            BorderBrush="{StaticResource scb-border}"
+                                            Background="{StaticResource scb-dark}">
+
+                                        <Grid >
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <ScrollViewer Grid.Row="0"
+                                                               MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Width}"
+                                                          HorizontalScrollBarVisibility="Disabled"
+                                                          VerticalScrollBarVisibility="Auto">
+
+                                                <ScrollViewer.Resources>
+                                                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">5</sys:Double>
+                                                </ScrollViewer.Resources>
+
+                                                <ItemsControl  Grid.Row="0"
+                                                               ItemsSource="{Binding DataPaths}">
+
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+
+                                                            <Border BorderThickness="0 0 0 1"
+                                                                    BorderBrush="{StaticResource scb-border}">
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="auto"/>
+                                                                    </Grid.ColumnDefinitions>
+
+                                                                    <RadioButton Grid.Column="0"
+                                                                                 Height="35"
+                                                                                 Content="{Binding GroupName}"
+                                                                                 Foreground="{StaticResource scb-light-dark}"
+                                                                                 FontSize="16"
+                                                                                 FontWeight="DemiBold"
+                                                                                 Style="{StaticResource MenuButtonTheme}"
+                                                                                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.EditPathEditorCmd}"
+                                                                                 CommandParameter="{Binding}"
+                                                                                 GroupName="DPGroupName"
+                                                                                 IsChecked="{Binding IsFirst}"/>
+
+
+                                                                    <Button Grid.Column="0"
+                                                                            Padding="2 3"
+                                                                            MaxHeight="20"
+                                                                            HorizontalAlignment="Right"
+                                                                            VerticalAlignment="Top"
+                                                                            Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.DeletePathEditorCmd}"
+                                                                            CommandParameter="{Binding}">
+
+                                                                        <Button.Style>
+                                                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource btn-danger}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding ElementName=DeleteToggle, Path=IsChecked}" Value="False">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Button.Style>
+
+                                                                        <Button.Content>
+
+                                                                            <ContentControl Template="{StaticResource fa-times}" 
+                                                                                        Width="8" Height="8"
+                                                                                        VerticalAlignment="Center"
+                                                                                        HorizontalAlignment="Center"
+                                                                                        Foreground="WhiteSmoke"/>
+
+                                                                        </Button.Content>
+
+                                                                    </Button>
+
+                                                                </Grid>
+
+                                                            </Border>
+                                                        </DataTemplate>
+
+                                                    </ItemsControl.ItemTemplate>
+
+                                                </ItemsControl>
+                                            </ScrollViewer>
+
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Button Grid.Column="0"
+                                                        Padding="5"
+                                                        Style="{StaticResource btn-primary}"
+                                                        Command="{Binding AddDataPathsCmd}"
+                                                        Margin="0 0 0 0">
+                                                    <Button.Content>
+
+                                                        <ContentControl Template="{StaticResource fa-plus}" 
+                                                                Width="14" Height="14"
+                                                                VerticalAlignment="Center"
+                                                                HorizontalAlignment="Center"
+                                                                Foreground="WhiteSmoke"/>
+
+                                                    </Button.Content>
+                                                </Button>
+
+                                                <ToggleButton x:Name="DeleteToggle"
+                                                              Grid.Column="1"
+                                                              Margin="0 0 0 0">
+                                                    <ToggleButton.Template>
+                                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                            <Border BorderBrush="{StaticResource scb-danger-dark}" 
+                                                                    BorderThickness="1" 
+                                                                    CornerRadius="4" 
+                                                                    Margin="0" 
+                                                                    Name="Border" 
+                                                                    Background="{TemplateBinding Background}">
+                                                                <Grid>
+                                                                    <ContentPresenter  Margin="3" 
+                                                                                    HorizontalAlignment="Center" 
+                                                                                    VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsChecked" Value="True">
+                                                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource scb-danger-light}" />
+                                                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource scb-danger}" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsChecked" Value="False">
+                                                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource scb-danger}" />
+                                                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource scb-danger-dark}" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource scb-danger-dark}" />
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </ToggleButton.Template>
+
+                                                    <ContentControl Template="{StaticResource fa-trash-alt}" 
+                                                                Width="14" Height="14"
+                                                                VerticalAlignment="Center"
+                                                                HorizontalAlignment="Center"
+                                                                Foreground="WhiteSmoke"/>
+                                                </ToggleButton>
+
+                                            </Grid>
+
+
+                                        </Grid>
+
+                                    </Border>
+
+                                    <ContentControl Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Grid.RowSpan="2"
+                                                    Content="{Binding PathEditorView}"
+                                                    Tag="No item Selected">
+                                        <ContentControl.Style>
+                                            <Style TargetType="{x:Type ContentControl}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Content}" Value="{x:Null}">
+
+                                                        <Setter Property="ContentControl.Template" Value="{StaticResource NoData}"/>
+
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ContentControl.Style>
+                                    </ContentControl>
+
+                                </Grid>
+                            </Border>
+
+                            <Grid Grid.Row="1"
+                                  Margin="-5 5 -5 0">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--<Button x:Name="AddDPBtn"
+                                        Grid.Column="0"
+                                        Margin="5 0 5 0"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding AddDataPathCmd}"
+                                        Style="{StaticResource btn-primary}">
+                            
+                                    <ContentControl
+                                                Template="{StaticResource fa-plus}"
+                                                Width="16" Height="16"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Foreground="WhiteSmoke"/>
+                                </Button>-->
+
+                                <Button x:Name="SaveBtn"
+                                        Grid.Column="1"
+                                        Margin="5 0 5 0"
+                                        HorizontalAlignment="Stretch"
+                                        Style="{StaticResource btn-success}"
+                                        IsDefault="True"
+                                        Command="{Binding OkCommand}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ContentControl Grid.Column="0"
+                                                        Template="{StaticResource fa-save}" 
+                                                        Width="14" Height="14"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center"
+                                                        Foreground="WhiteSmoke"/>
+
+                                        <TextBlock Text="Save"
+                                                   Grid.Column="1"
+                                                   FontSize="14"
+                                                   FontWeight="DemiBold"
+                                                   Margin="5 0 0 0"/>
+                                    </Grid>
+                                </Button>
+
+                                <Button x:Name="CancelBtn"
+                                        Grid.Column="2"
+                                        Margin="5 0 5 0"
+                                        HorizontalAlignment="Stretch"
+                                        Style="{StaticResource btn-danger}"
+                                        IsCancel="true"
+                                        Command="{Binding CancelCommand}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ContentControl Grid.Column="0"
+                                                        Template="{StaticResource fa-times}" 
+                                                        Width="14" Height="14"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center"
+                                                        Foreground="WhiteSmoke"/>
+
+                                        <TextBlock Text="Cancel"
+                                                   Grid.Column="1"
+                                                   FontSize="14"
+                                                   FontWeight="DemiBold"
+                                                   Margin="5 0 0 0"
+                                                   />
+                                    </Grid>
+                                </Button>
+
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
         </Border>
     </Canvas>
 </Window>

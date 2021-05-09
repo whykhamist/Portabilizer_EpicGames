@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:Settings.Core.Converters"
-        mc:Ignorable="d" Background="Transparent" Foreground="WhiteSmoke"
+        mc:Ignorable="d" Background="Transparent" Foreground="{StaticResource scb-light}"
         AllowsTransparency="true"  FontSize="12"
         Title="Epic Games Portable Settings"
         Height="400" Width="600" WindowStartupLocation="CenterScreen"
         Icon="/Images/Epic Games Portable.png"  
         ResizeMode="NoResize" WindowStyle="None"
+        
         x:Name="SettingsMainWindow">
 
     <Canvas >
@@ -33,21 +34,13 @@
             </Border.Height>
         </Border>
 
-        <Border Margin="{Binding ElementName=ShadowBorder, Path=Margin}"
+        <Border x:Name="MainBorder"
+                Margin="{Binding ElementName=ShadowBorder, Path=Margin}"
                 Width="{Binding ElementName=ShadowBorder, Path=Width}"
                 Height="{Binding ElementName=ShadowBorder, Path=Height}"
-                CornerRadius="10">
-            
-            <Border.Clip>
-                <MultiBinding Converter="{converters:RectangleConverter}">
-                        <Binding Path="ActualWidth"
-                             RelativeSource="{RelativeSource Self}"/>
-                        <Binding Path="ActualHeight"
-                             RelativeSource="{RelativeSource Self}"/>
-                        <Binding Path="CornerRadius"
-                             RelativeSource="{RelativeSource Self}"/>
-                    </MultiBinding>
-            </Border.Clip>
+                CornerRadius="10"
+                BorderThickness="1.5"
+                BorderBrush="{StaticResource scb-border}">
 
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
@@ -57,92 +50,117 @@
                 </LinearGradientBrush>
             </Border.Background>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" ></ColumnDefinition>
+            <Border>
 
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="34px"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0"  x:Name="HeaderGrid" Background="#1c1c1c" MouseMove="HeaderGrid_MouseMove">
+                <Border.Clip>
+                    <MultiBinding Converter="{converters:RectangleConverter}">
+                        <Binding Path="ActualWidth" ElementName ="MainBorder"/>
+                        <Binding Path="ActualHeight" ElementName ="MainBorder"/>
+                        <Binding Path="CornerRadius" ElementName ="MainBorder"/>
+                        <Binding Path="BorderThickness" ElementName ="MainBorder"/>
+                    </MultiBinding>
+                </Border.Clip>
+                
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="45"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="45"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Label Content="{Binding ElementName=SettingsMainWindow, Path=Title}"
-                               FontSize="24" Foreground="WhiteSmoke"
-                               FontWeight="Bold"/>
-                    </StackPanel>
-                    <Button x:Name="ExitBtn" Grid.Column="2"
-                            Click="ExitBtn_Click"
-                            Style="{StaticResource btn-exit}">
+                        <ColumnDefinition Width="*" ></ColumnDefinition>
 
-                        <ContentControl Grid.Column="0"
-                                        Template="{StaticResource fa-times}"
-                                        Width="10" Height="10"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        Foreground="WhiteSmoke"
-                                        Margin="5,0,5,0"/>
-                    </Button>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="125"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="34px"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          x:Name="HeaderGrid"
+                          Background="{StaticResource scb-dark-dark}"
+                          MouseMove="HeaderGrid_MouseMove">
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource scb-dark}">
-                        <RadioButton Content="Home"
-                                        Height="35"
-                                        Foreground="{StaticResource scb-light-dark}"
-                                        FontSize="16"
-                                        FontWeight="DemiBold"
-                                        Style="{StaticResource MenuButtonTheme}"
-                                        IsChecked="True"
-                                        Tag="{StaticResource fa-home}"
-                                        Command="{Binding HomeViewCommand}">
-                                
-                        </RadioButton>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding ElementName=SettingsMainWindow, Path=Title}"
+                                   FontSize="24"
+                                   FontWeight="Bold"/>
 
-                        <RadioButton Content="Settings"
-                                        Height="35"
-                                        Foreground="{StaticResource scb-light-dark}"
-                                        FontSize="16"
-                                        FontWeight="DemiBold"
-                                        Tag="{StaticResource fa-cogs}"
-                                        Style="{StaticResource MenuButtonTheme}"
-                                        Command="{Binding SettingsViewCommand}">
-                        </RadioButton>
+                        <Button x:Name="ExitBtn" Grid.Column="2"
+                                Click="ExitBtn_Click"
+                                Style="{StaticResource btn-exit}">
 
-                        <RadioButton Content="Epic Games"
-                                        Height="35"
-                                        Foreground="{StaticResource scb-light-dark}"
-                                        FontSize="16"
-                                        FontWeight="DemiBold"
-                                        Style="{StaticResource MenuButtonTheme}"
-                                        Command="{Binding EpicGamesViewCommand}"
-                                        Tag="{StaticResource EpicGamesLogo}">
+                            <ContentControl Grid.Column="0"
+                                            Template="{StaticResource fa-times}"
+                                            Width="10" Height="10"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Margin="5,0,5,0"/>
+                            
+                        </Button>
+                    </Grid>
+                    
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="125"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                        </RadioButton>
-                    </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource scb-dark}">
+                            <RadioButton Content="Home"
+                                            Height="35"
+                                            FontSize="16"
+                                            FontWeight="DemiBold"
+                                            IsChecked="True"
+                                            Foreground="{StaticResource scb-light-dark}"
+                                            Tag="{StaticResource fa-home}"
+                                            Command="{Binding HomeViewCommand}"
+                                            Style="{StaticResource MenuButtonTheme}"/>
 
-                    <ContentControl Grid.Row="0"
-                                    Grid.Column="1"
-                                    Margin="10"
-                                    Content="{Binding CurrentView}">
 
-                    </ContentControl>
+
+                            <RadioButton Content="Settings"
+                                            Height="35"
+                                            FontSize="16"
+                                            FontWeight="DemiBold"
+                                            Foreground="{StaticResource scb-light-dark}"
+                                            Tag="{StaticResource fa-cogs}"
+                                            Style="{StaticResource MenuButtonTheme}"
+                                            Command="{Binding SettingsViewCommand}"/>
+
+
+                            <RadioButton Content="Epic Games"
+                                            Height="35"
+                                            FontSize="16"
+                                            FontWeight="DemiBold"
+                                            Foreground="{StaticResource scb-light-dark}"
+                                            Tag="{StaticResource EpicGamesLogo}"
+                                            Style="{StaticResource MenuButtonTheme}"
+                                            Command="{Binding EpicGamesViewCommand}"/>
+
+
+                        </StackPanel>
+
+                        <ContentControl Grid.Row="0"
+                                        Grid.Column="1"
+                                        Margin="10"
+                                        Content="{Binding CurrentView}">
+
+                        </ContentControl>
+                    </Grid>
                 </Grid>
-            </Grid>
 
+
+            </Border>
+            
         </Border>
     </Canvas>
 </Window>

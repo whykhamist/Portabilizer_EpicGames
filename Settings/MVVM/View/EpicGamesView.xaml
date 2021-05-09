@@ -4,15 +4,41 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Settings.MVVM.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="276" d:DesignWidth="435">
+             xmlns:converters="clr-namespace:Settings.Core.Converters"
+             mc:Ignorable="d" d:DesignHeight="276" d:DesignWidth="435">
 
-    <Border BorderThickness="1" BorderBrush="WhiteSmoke" CornerRadius="10"
-            Background="#3C3C3C">
-        <Border.Clip>
-            <RectangleGeometry RadiusX="10"
-                               RadiusY="10"
-                               Rect="0,0,435,276"/>
-        </Border.Clip>
-    </Border>
+        <Border x:Name="MainBorder"
+                CornerRadius="10"
+                BorderThickness="1.5"
+                BorderBrush="{StaticResource scb-border}">
+
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Setters>
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <SolidColorBrush Color="{StaticResource clr-dark}" Opacity="0.25"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style.Setters>
+                </Style>
+            </Border.Style>
+
+            <Border>
+
+                <Border.Clip>
+                    <MultiBinding Converter="{converters:RectangleConverter}">
+                        <Binding Path="ActualWidth" ElementName ="MainBorder"/>
+                        <Binding Path="ActualHeight" ElementName ="MainBorder"/>
+                        <Binding Path="CornerRadius" ElementName ="MainBorder"/>
+                        <Binding Path="BorderThickness" ElementName ="MainBorder"/>
+                    </MultiBinding>
+                </Border.Clip>
+
+                <Grid>
+                    
+                </Grid>
+            </Border>
+        </Border>
+
 </UserControl>
