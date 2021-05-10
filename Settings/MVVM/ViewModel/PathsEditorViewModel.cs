@@ -88,8 +88,7 @@ namespace Settings.MVVM.ViewModel
             StatusMessage = string.Empty;
             if (path != null && path is PathsModel _path)
             {
-                IOService fileDialog = new OpenFolderDIalogService();
-                string output = fileDialog.OpenDialog($"Browse for a data path.");
+                string output = Helpers.OpenDialog(OpenDialogType.Folder, $"Browse for a data path.");
 
                 if (!string.IsNullOrWhiteSpace(output))
                 {

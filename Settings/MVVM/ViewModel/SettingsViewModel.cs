@@ -1,9 +1,6 @@
 ﻿using Settings.MVVM.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Configuration;
 using Newtonsoft.Json;
 using System.IO;
@@ -171,8 +168,7 @@ namespace Settings.MVVM.ViewModel
 
         private void BrowseExec()
         {
-            IOService fileDialog = new OpenFileDialogService();
-            string output = fileDialog.OpenDialog("Browse for executable file.", Environment.CurrentDirectory);
+            string output = Helpers.OpenDialog(OpenDialogType.File, "Browse for executable file.", Environment.CurrentDirectory);
             if (!string.IsNullOrWhiteSpace(output))
             {
                 Executable = output.Replace($"{Environment.CurrentDirectory}", "");
@@ -181,8 +177,7 @@ namespace Settings.MVVM.ViewModel
 
         private void BrowseDataFolder()
         {
-            IOService folderDialog = new OpenFolderDIalogService();
-            string output = folderDialog.OpenDialog("Browse for Data Folder.", Environment.CurrentDirectory);
+            string output = Helpers.OpenDialog(OpenDialogType.Folder, "Browse for Data Folder.", Environment.CurrentDirectory);
             if (!string.IsNullOrWhiteSpace(output))
             {
                 DataFolder = output.Replace( $"{Environment.CurrentDirectory}", "");
