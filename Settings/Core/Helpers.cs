@@ -1,4 +1,5 @@
-﻿using Settings.MVVM.Model;
+﻿using Settings.Core.IOService;
+using Settings.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -72,6 +73,13 @@ namespace Settings.Core
                 tmpPaths.Add(data.FolderName, data.Path);
             }
             return tmpPaths;
+        }
+
+        public static string OpenDialog(OpenDialogType OType, string title = null, string currentDirectory = null)
+        {
+            IOService.IOService fileDialog = OType == OpenDialogType.File ? new OpenFileDialogService() : new OpenFolderDIalogService();
+            string output = fileDialog.OpenDialog(title, currentDirectory);
+            return output;
         }
     }
 }
