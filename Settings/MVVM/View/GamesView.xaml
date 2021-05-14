@@ -1,0 +1,177 @@
+﻿<UserControl x:Class="Settings.MVVM.View.GamesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Settings.MVVM.View"
+             mc:Ignorable="d" d:DesignWidth="400"
+             Style="{StaticResource Genuine}">
+    
+    <Border BorderThickness="1"
+            CornerRadius="5"
+            BorderBrush="{StaticResource scb-border}">
+
+        <Border.Background>
+            <SolidColorBrush Color="{StaticResource clr-dark-dark}" Opacity="0.5"/>
+        </Border.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Column="0"
+                    Grid.Row="0"
+                    Grid.RowSpan="4"
+                    BorderThickness="0 0 1 0"
+                    BorderBrush="{StaticResource scb-border}">
+
+                <Image VerticalAlignment="Center"
+                       MaxWidth="64"
+                       Source="C:\Users\Administrator\Desktop\FontAwesome\Font-Awesome-SVG-PNG-master\black\png\64\user.png"/>
+
+            </Border>
+
+            <Border Grid.Column="1"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    BorderThickness="0 0 0 1"
+                    BorderBrush="{StaticResource scb-border}">
+
+                <TextBlock Text="Limbo"
+                           Padding="4 2"
+                           FontSize="14"
+                           VerticalAlignment="Center"/>
+
+            </Border>
+
+
+            <Border Grid.Column="1"
+                    Grid.Row="1"
+                    BorderThickness="0 0 0 1"
+                    BorderBrush="{StaticResource scb-border}">
+                <TextBlock Text="V1.0"
+                           Padding="4 2"
+                           VerticalAlignment="Center"/>
+            </Border>
+
+
+            <Border Grid.Column="1"
+                    Grid.Row="2"
+                    BorderThickness="0 0 0 1"
+                    BorderBrush="{StaticResource scb-border}">
+
+                <TextBlock Text="Location"
+                           Padding="4 2"
+                           VerticalAlignment="Center"/>
+
+            </Border>
+
+            <TextBlock Text="863.56mb"
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        Padding="4 2"
+                        VerticalAlignment="Center"/>
+
+            <Border Grid.Column="2"
+                    Grid.Row="1"
+                    Grid.RowSpan="3"
+                    Width="64"
+                    BorderThickness="1 0 0 0"
+                    BorderBrush="{StaticResource scb-border}">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Column="0"
+                            Grid.Row="0"
+                            Padding="0"
+                            Margin="2"
+                            Style="{StaticResource btn-primary}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ContentControl Template="{StaticResource fa-file-exe}"
+                                            Grid.Column="0"
+                                            Width="8"
+                                            Margin="0 0 3 0"
+                                            VerticalAlignment="Center"/>
+                            
+                            <TextBlock Grid.Column="1"
+                                       Text="Launch"
+                                       FontSize="10"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    
+                    <Button Grid.Column="0"
+                            Grid.Row="1"
+                            Padding="0"
+                            Margin="2"
+                            Style="{StaticResource btn-secondary}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ContentControl Template="{StaticResource fa-share}"
+                                            Grid.Column="0"
+                                            Width="8"
+                                            Margin="0 0 3 0"
+                                            VerticalAlignment="Center"/>
+                            
+                            <TextBlock Grid.Column="1"
+                                       Text="Shortcut"
+                                       FontSize="10"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    
+                    <Button Grid.Column="0"
+                            Grid.Row="2"
+                            Padding="0"
+                            Margin="2"
+                            Style="{StaticResource btn-danger}">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ContentControl Template="{StaticResource fa-trash-alt}"
+                                            Grid.Column="0"
+                                            Width="8"
+                                            Margin="0 0 3 0"
+                                            VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="Delete"
+                                       FontSize="10"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                </Grid>
+
+            </Border>
+
+        </Grid>
+    </Border>
+</UserControl>

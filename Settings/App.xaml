@@ -8,6 +8,8 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/Colors.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Theme/FlatButton.xaml"></ResourceDictionary>
@@ -17,6 +19,11 @@
                 <ResourceDictionary Source="Theme/Icons.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Theme/TextBoxTheme.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Theme/NoDataTemplate.xaml"></ResourceDictionary>
+                <ResourceDictionary>
+                    <Style x:Key="Genuine">
+                        <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/fonts/#Genuine"/>
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:SettingsViewModel}">

@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Settings.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="276" d:DesignWidth="435">
+             d:DesignHeight="276" d:DesignWidth="435"
+             Style="{StaticResource Genuine}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

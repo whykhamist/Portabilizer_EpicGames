@@ -6,7 +6,8 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:viewmodel="clr-namespace:Settings.MVVM.ViewModel"
              xmlns:converters="clr-namespace:Settings.Core.Converters"
-             mc:Ignorable="d" d:DesignWidth="430" d:DesignHeight="280">
+             mc:Ignorable="d" d:DesignWidth="430" d:DesignHeight="280"
+             Style="{StaticResource Genuine}">
 
     <Border x:Name="MainBorder"
             BorderThickness="1.5"
@@ -56,8 +57,7 @@
                         <TextBlock Text="Title"
                                    Grid.Row="0"
                                    Grid.Column="0"
-                                   FontSize="14"
-                                   FontWeight="DemiBold"/>
+                                   FontSize="14"/>
                     
                         <TextBox Margin="10,0,10,0"
                                  Grid.Row="1"
@@ -78,13 +78,11 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Width"
-                                           FontSize="14"
-                                           FontWeight="DemiBold"/>
+                                           FontSize="14"/>
 
                             <TextBlock Text="Height"
                                            Grid.Column="2"
-                                           FontSize="14"
-                                           FontWeight="DemiBold"/>
+                                           FontSize="14"/>
                         </Grid>
 
                         <Grid Grid.Column="1" Grid.Row="1">
@@ -105,7 +103,6 @@
 
                             <TextBlock Text="x"
                                        FontSize="14"
-                                       FontWeight="DemiBold"
                                        Grid.Column="1"/>
 
                             <TextBox Padding="10,4"
@@ -134,8 +131,7 @@
                         <TextBlock Text="Executable"
                                        Grid.Column="0"
                                        Grid.Row="0"
-                                       FontSize="14"
-                                       FontWeight="DemiBold"/>
+                                       FontSize="14"/>
 
                         <TextBox x:Name="ExecTxt"
                                  Margin="10,0,10,0"
@@ -168,7 +164,6 @@
                                 <TextBlock Text="Browse"
                                             Grid.Column="1"
                                             FontSize="12"
-                                            FontWeight="DemiBold"
                                             Margin="5 0 0 0"
                                             VerticalAlignment="Center"/>
                             </Grid>
@@ -191,8 +186,7 @@
                         <TextBlock Text="Data Folder"
                                    Grid.Column="0"
                                    Grid.Row="0"
-                                   FontSize="14"
-                                   FontWeight="DemiBold"/>
+                                   FontSize="14"/>
 
                         <TextBox x:Name="DataFolderTxt" Margin="10,0,10,0"
                                  Grid.Column="0"
@@ -215,15 +209,14 @@
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <ContentControl Grid.Column="0"
-                                                        Template="{StaticResource fa-folder-open}" 
-                                                        Width="16" Height="16"
-                                                        VerticalAlignment="Center"
-                                                        HorizontalAlignment="Center"/>
+                                                Template="{StaticResource fa-folder-open}" 
+                                                Width="16" Height="16"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"/>
 
                                 <TextBlock Text="Browse"
                                            Grid.Column="1"
                                            FontSize="12"
-                                           FontWeight="DemiBold"
                                            Margin="5 0 0 0"
                                            VerticalAlignment="Center"/>
                             </Grid>
@@ -249,7 +242,6 @@
                                   Margin="10,0,10,0"
                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Foreground}"
                                   FontSize="14"
-                                  FontWeight="DemiBold"
                                   IsChecked="{Binding ClearSymlinks}"/>
 
 

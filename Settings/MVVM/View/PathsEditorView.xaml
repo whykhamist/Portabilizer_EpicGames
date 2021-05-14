@@ -7,7 +7,8 @@
              xmlns:viewmodel="clr-namespace:Settings.MVVM.ViewModel" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" FontSize="12" Foreground="{StaticResource scb-light-dark}"
              x:Name="PathsEditorWindow" d:DesignWidth="714"
-             d:DesignHeight="300">
+             d:DesignHeight="300"
+             Style="{StaticResource Genuine}">
 
     <Border Margin="5"
             BorderThickness="1"
@@ -67,14 +68,12 @@
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                Text="Folder Name"
-                               FontWeight="Bold"
                                VerticalAlignment="Center"
                                Padding="5"/>
                     
                     <TextBlock Grid.Row="0"
                                Grid.Column="1"
                                Text="Path"
-                               FontWeight="Bold"
                                VerticalAlignment="Center"
                                Padding="5"/>
 
@@ -148,10 +147,10 @@
                                                 CommandParameter="{Binding}">
 
                                             <ContentControl Template="{StaticResource fa-trash-alt}" 
-                                                                    Width="16" Height="16"
-                                                                    VerticalAlignment="Center"
-                                                                    HorizontalAlignment="Center"
-                                                                    Foreground="{StaticResource scb-text-light}"/>
+                                                            Width="16" Height="16"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            Foreground="{StaticResource scb-text-light}"/>
                                         </Button>
                                     </Grid>
                                 </DataTemplate>

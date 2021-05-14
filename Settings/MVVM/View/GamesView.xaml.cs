@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Settings
+namespace Settings.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for Games.xaml
+    /// Interaction logic for GamesView.xaml
     /// </summary>
-    public partial class Games : UserControl
+    public partial class GamesView : UserControl
     {
-        public Games()
+        public GamesView()
         {
             InitializeComponent();
         }

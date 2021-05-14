@@ -10,7 +10,7 @@
         Height="400" Width="600" WindowStartupLocation="CenterScreen"
         Icon="/Images/Epic Games Portable.png"  
         ResizeMode="NoResize" WindowStyle="None"
-        
+        Style="{StaticResource Genuine}"
         x:Name="SettingsMainWindow">
 
     <Canvas >
@@ -118,7 +118,6 @@
                             <RadioButton Content="Home"
                                             Height="35"
                                             FontSize="16"
-                                            FontWeight="DemiBold"
                                             IsChecked="True"
                                             Foreground="{StaticResource scb-light-dark}"
                                             Tag="{StaticResource fa-home}"
@@ -130,7 +129,6 @@
                             <RadioButton Content="Settings"
                                             Height="35"
                                             FontSize="16"
-                                            FontWeight="DemiBold"
                                             Foreground="{StaticResource scb-light-dark}"
                                             Tag="{StaticResource fa-cogs}"
                                             Style="{StaticResource MenuButtonTheme}"
@@ -140,7 +138,6 @@
                             <RadioButton Content="Epic Games"
                                             Height="35"
                                             FontSize="16"
-                                            FontWeight="DemiBold"
                                             Foreground="{StaticResource scb-light-dark}"
                                             Tag="{StaticResource EpicGamesLogo}"
                                             Style="{StaticResource MenuButtonTheme}"

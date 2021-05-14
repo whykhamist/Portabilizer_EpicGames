@@ -5,40 +5,42 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Settings.MVVM.View"
              xmlns:converters="clr-namespace:Settings.Core.Converters"
-             mc:Ignorable="d" d:DesignHeight="276" d:DesignWidth="435">
+             mc:Ignorable="d" d:DesignHeight="276" d:DesignWidth="435"
+             Style="{StaticResource Genuine}">
 
-        <Border x:Name="MainBorder"
-                CornerRadius="10"
-                BorderThickness="1.5"
-                BorderBrush="{StaticResource scb-border}">
+    <Border x:Name="MainBorder"
+            CornerRadius="10"
+            BorderThickness="1.5"
+            BorderBrush="{StaticResource scb-border}">
 
-            <Border.Style>
-                <Style TargetType="{x:Type Border}">
-                    <Style.Setters>
-                        <Setter Property="Background">
-                            <Setter.Value>
-                                <SolidColorBrush Color="{StaticResource clr-dark}" Opacity="0.25"/>
-                            </Setter.Value>
-                        </Setter>
-                    </Style.Setters>
-                </Style>
-            </Border.Style>
+        <Border.Style>
+            <Style TargetType="{x:Type Border}">
+                <Style.Setters>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{StaticResource clr-dark}" Opacity="0.25"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+        </Border.Style>
 
-            <Border>
+        <Border>
 
-                <Border.Clip>
-                    <MultiBinding Converter="{converters:RectangleConverter}">
-                        <Binding Path="ActualWidth" ElementName ="MainBorder"/>
-                        <Binding Path="ActualHeight" ElementName ="MainBorder"/>
-                        <Binding Path="CornerRadius" ElementName ="MainBorder"/>
-                        <Binding Path="BorderThickness" ElementName ="MainBorder"/>
-                    </MultiBinding>
-                </Border.Clip>
-
-                <Grid>
-                    
-                </Grid>
+            <Border.Clip>
+                <MultiBinding Converter="{converters:RectangleConverter}">
+                    <Binding Path="ActualWidth" ElementName ="MainBorder"/>
+                    <Binding Path="ActualHeight" ElementName ="MainBorder"/>
+                    <Binding Path="CornerRadius" ElementName ="MainBorder"/>
+                    <Binding Path="BorderThickness" ElementName ="MainBorder"/>
+                </MultiBinding>
+            </Border.Clip>
+            
+            <Border Padding="5" VerticalAlignment="Top">
+                <local:GamesView/>
             </Border>
+            
         </Border>
+    </Border>
 
 </UserControl>

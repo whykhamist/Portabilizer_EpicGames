@@ -11,6 +11,7 @@
         AllowsTransparency="true" Foreground="{StaticResource scb-light}"
         FontSize="12" WindowStartupLocation="CenterOwner"
         ShowInTaskbar="false" Title="Data Paths Editor"
+        Style="{StaticResource Genuine}"
         Height="500" Width="800">
     
     <Window.Resources>
@@ -91,8 +92,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Label Content="{Binding ElementName=DataPathEditorWindow, Path=Title}"
-                                   FontSize="24" Foreground="WhiteSmoke"
-                                   FontWeight="Bold"/>
+                                   FontSize="24" Foreground="{Binding ElementName=DataPathEditorWindow, Path=Foreground}"/>
                         </StackPanel>
                         <Button x:Name="ExitBtn" Grid.Column="2"
                                 Style="{StaticResource btn-exit}"
@@ -104,7 +104,7 @@
                                             Width="10" Height="10"
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Center"
-                                            Foreground="WhiteSmoke"
+                                            Foreground="{StaticResource scb-light}"
                                             Margin="5,0,5,0"/>
                         </Button>
                     </Grid>
@@ -156,7 +156,7 @@
                                             </Grid.RowDefinitions>
 
                                             <ScrollViewer Grid.Row="0"
-                                                               MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Width}"
+                                                          MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Width}"
                                                           HorizontalScrollBarVisibility="Disabled"
                                                           VerticalScrollBarVisibility="Auto">
 
@@ -183,7 +183,6 @@
                                                                                  Content="{Binding GroupName}"
                                                                                  Foreground="{StaticResource scb-light-dark}"
                                                                                  FontSize="16"
-                                                                                 FontWeight="DemiBold"
                                                                                  Style="{StaticResource MenuButtonTheme}"
                                                                                  Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.EditPathEditorCmd}"
                                                                                  CommandParameter="{Binding}"
@@ -216,7 +215,7 @@
                                                                                         Width="8" Height="8"
                                                                                         VerticalAlignment="Center"
                                                                                         HorizontalAlignment="Center"
-                                                                                        Foreground="WhiteSmoke"/>
+                                                                                        Foreground="{StaticResource scb-light}"/>
 
                                                                         </Button.Content>
 
@@ -249,7 +248,7 @@
                                                                 Width="14" Height="14"
                                                                 VerticalAlignment="Center"
                                                                 HorizontalAlignment="Center"
-                                                                Foreground="WhiteSmoke"/>
+                                                                Foreground="{StaticResource scb-light}"/>
 
                                                     </Button.Content>
                                                 </Button>
@@ -291,7 +290,7 @@
                                                                 Width="14" Height="14"
                                                                 VerticalAlignment="Center"
                                                                 HorizontalAlignment="Center"
-                                                                Foreground="WhiteSmoke"/>
+                                                                Foreground="{StaticResource scb-light}"/>
                                                 </ToggleButton>
 
                                             </Grid>
@@ -363,12 +362,11 @@
                                                         Width="14" Height="14"
                                                         VerticalAlignment="Center"
                                                         HorizontalAlignment="Center"
-                                                        Foreground="WhiteSmoke"/>
+                                                        Foreground="{StaticResource scb-light}"/>
 
                                         <TextBlock Text="Save"
                                                    Grid.Column="1"
                                                    FontSize="14"
-                                                   FontWeight="DemiBold"
                                                    Margin="5 0 0 0"/>
                                     </Grid>
                                 </Button>
@@ -390,14 +388,12 @@
                                                         Width="14" Height="14"
                                                         VerticalAlignment="Center"
                                                         HorizontalAlignment="Center"
-                                                        Foreground="WhiteSmoke"/>
+                                                        Foreground="{StaticResource scb-light}"/>
 
                                         <TextBlock Text="Cancel"
                                                    Grid.Column="1"
                                                    FontSize="14"
-                                                   FontWeight="DemiBold"
-                                                   Margin="5 0 0 0"
-                                                   />
+                                                   Margin="5 0 0 0"/>
                                     </Grid>
                                 </Button>
 
